@@ -1,0 +1,51 @@
+{
+    "name": "cesargb/laravel-logs-rotate",
+    "description": "Rotate files log with compression",
+    "keywords": [
+        "laravel",
+        "logs",
+        "rotate",
+        "compression"
+    ],
+    "homepage": "https://github.com/cesargb/laravel-logs-rotate",
+    "authors": [
+	{
+		"name": "Cesar Garcia",
+		"email": "cesargb@gmail.com",
+		"homepage": "https://github.com/cesargb",
+        	"role": "Developer"
+	}
+    ],
+    "license": "MIT",
+    "require": {
+        "php" : ">=7.0",
+        "cesargb/file-rotate": "^1.0",
+        "illuminate/config": "~5.4.0 || ~5.5.0",
+        "illuminate/console": "~5.4.0 || ~5.5.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.4.2",
+        "phpunit/phpunit": "^6.2",
+        "illuminate/log": "~5.4.0 || ~5.5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cesargb\\File\\Rotate\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cesargb\\File\\Rotate\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cesargb\\File\\Rotate\\RotateServiceProvider"
+            ]
+        }
+    }
+}
