@@ -28,5 +28,5 @@ class Rotate extends Command
         } else {
             $this->error('Laravel must be configure with single log. You can change this in app/config.php');
         }
-   }
+    }
 }

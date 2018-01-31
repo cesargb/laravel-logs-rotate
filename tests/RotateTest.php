@@ -25,7 +25,6 @@ class RotateTest extends TestCase
     /** @test **/
     public function it_can_rotate_logs()
     {
-
         Log::info('test');
 
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
@@ -56,14 +55,12 @@ class RotateTest extends TestCase
     {
         $this->app['config']->set('rotate.log_compress_files', true);
 
-
-        for ($n = 0 ; $n<10; $n++) {
+        for ($n = 0; $n < 10; $n++) {
             file_put_contents(app()->storagePath().'/logs/laravel.log', 'test');
             Artisan::call('logs:rotate');
         }
 
         $filesOld = glob(app()->storagePath().'/logs/laravel.log.*.gz');
-
 
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.2.gz');
