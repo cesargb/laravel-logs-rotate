@@ -1,8 +1,8 @@
 
 
-# Create link for authenticate in Laravel without password
+# Rotate files log with compression
 
-This package permit create a link for authenticate without user or password.
+This package permit rotate logs in Laravel with compression.
 
 ## Instalation
 
