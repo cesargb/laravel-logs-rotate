@@ -1,4 +1,4 @@
-
+[![StyleCI](https://styleci.io/repos/119604039/shield?branch=master)](https://styleci.io/repos/119604039)
 
 # Rotate files log with compression
 
