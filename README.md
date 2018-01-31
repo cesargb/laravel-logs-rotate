@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/cesargb/laravel-logs-rotate.svg?branch=master)](https://travis-ci.org/cesargb/laravel-logs-rotate)
 [![StyleCI](https://styleci.io/repos/119604039/shield?branch=master)](https://styleci.io/repos/119604039)
 
 # Rotate files log with compression
