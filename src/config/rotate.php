@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'log_max_files' => config('app.log_max_files'),
+    'log_max_files' => env('LOG_MAX_FILES', 5),
 
     'log_compress_files' => true,
 
