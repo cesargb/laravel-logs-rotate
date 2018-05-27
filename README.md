@@ -29,7 +29,7 @@ You can publish config file with:
 ```
 php artisan vendor:publish --provider="Cesargb\File\Rotate\RotateServiceProvider" --tag=config
 ```
-This is the contents of the published config/magiclink.php config file:
+This is the contents of the published config/rotate.php config file:
 
 ```php
 return [
