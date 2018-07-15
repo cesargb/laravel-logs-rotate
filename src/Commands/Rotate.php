@@ -13,10 +13,7 @@ class Rotate extends Command
 
     public function handle()
     {
-    	$logs=[
-    		app()->storagePath().'/logs/laravel.log',
-		    app()->storagePath().'/logs/worker.log',
-	    ];
+	    $logs = glob(app()->storagePath().'/logs/*.log');
 
     	foreach ($logs as $logfile){
 		    $result = RotateFile::file(
