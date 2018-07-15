@@ -13,16 +13,20 @@ class Rotate extends Command
 
     public function handle()
     {
-        $result = RotateFile::file(
-            app()->storagePath().'/logs/laravel.log',
-            config('rotate.log_max_files', 7),
-            config('rotate.log_compress_files', true)
-        );
+	    $logs = glob(app()->storagePath().'/logs/*.log');
 
-        if ($result) {
-            $this->info('Logs was rotated');
-        } else {
-            $this->error('Logs rotate failed');
-        }
+    	foreach ($logs as $logfile){
+		    $result = RotateFile::file(
+			    $logfile,
+			    config('rotate.log_max_files', 7),
+			    config('rotate.log_compress_files', true)
+		    );
+		    if ($result) {
+			    $this->info('Log '.$logfile.' was rotated');
+			    touch($logfile);
+		    } else {
+			    $this->error('Log '.$logfile.' rotate failed');
+		    }
+	    }
     }
 }

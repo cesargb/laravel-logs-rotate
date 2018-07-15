@@ -15,7 +15,7 @@ class RotateTest extends TestCase
         $this->app['config']->set('rotate.log_compress_files', true);
         $this->app['config']->set('rotate.log_max_files', 5);
 
-        $filesOld = glob(app()->storagePath().'/logs/laravel*');
+        $filesOld = glob(app()->storagePath().'/logs/*');
 
         foreach ($filesOld as $f) {
             unlink($f);
@@ -27,12 +27,18 @@ class RotateTest extends TestCase
     {
         Log::info('test');
 
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
+	    $logs = glob(app()->storagePath().'/logs/*.log');
+	    foreach($logs as $log){
+		    $this->assertFileExists($log);
+	    }
 
         $resultCode = Artisan::call('logs:rotate');
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
+
+	    foreach($logs as $log){
+		    $this->assertFileExists($log.'.1.gz');
+	    }
     }
 
     /** @test **/
@@ -40,33 +46,42 @@ class RotateTest extends TestCase
     {
         Log::info('test');
 
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
+	    $logs = glob(app()->storagePath().'/logs/*.log');
+	    foreach($logs as $log){
+		    $this->assertFileExists($log);
+	    }
 
         $this->app['config']->set('rotate.log_compress_files', false);
 
         $resultCode = Artisan::call('logs:rotate');
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1');
+	    foreach($logs as $log){
+		    $this->assertFileExists($log.'.1');
+	    }
+
     }
 
     /** @test **/
     public function it_can_rotate_logs_with_maxfiles()
     {
-        $this->app['config']->set('rotate.log_compress_files', true);
+	    $this->app['config']->set('rotate.log_compress_files', true);
 
-        for ($n = 0; $n < 10; $n++) {
-            file_put_contents(app()->storagePath().'/logs/laravel.log', 'test');
-            Artisan::call('logs:rotate');
-        }
+	    $logs = glob(app()->storagePath().'/logs/*.log');
 
-        $filesOld = glob(app()->storagePath().'/logs/laravel.log.*.gz');
+	    for ($n = 0; $n < 10; $n++) {
+		    foreach($logs as $log){
+			    file_put_contents($log, 'test');
+		    }
+		    Artisan::call('logs:rotate');
+	    }
 
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.2.gz');
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.3.gz');
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.4.gz');
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.5.gz');
-        $this->assertFalse(file_exists(app()->storagePath().'/logs/laravel.log.6.gz'));
+	    $filesOld = glob(app()->storagePath().'/logs/*.log.*.gz');
+	    foreach($logs as $log){
+	    	for($i=1;$i<=5;$i++){
+			    $this->assertFileExists($log.'1.gz');
+		    }
+		    $this->assertFalse(file_exists($log.'.6.gz'));
+	    }
     }
 }
