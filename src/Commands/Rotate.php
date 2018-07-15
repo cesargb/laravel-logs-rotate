@@ -4,6 +4,7 @@ namespace Cesargb\File\Rotate\Commands;
 
 use Cesargb\File\Rotate as RotateFile;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 class Rotate extends Command
 {
@@ -23,6 +24,7 @@ class Rotate extends Command
 		    );
 		    if ($result) {
 			    $this->info('Log '.$logfile.' was rotated');
+			    touch($logfile);
 		    } else {
 			    $this->error('Log '.$logfile.' rotate failed');
 		    }
