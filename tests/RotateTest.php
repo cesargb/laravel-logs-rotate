@@ -15,7 +15,7 @@ class RotateTest extends TestCase
         $this->app['config']->set('rotate.log_compress_files', true);
         $this->app['config']->set('rotate.log_max_files', 5);
 
-        $filesOld = glob(app()->storagePath().'/logs/laravel*');
+        $filesOld = glob(app()->storagePath().'/logs/{laravel,worker}*',GLOB_BRACE);
 
         foreach ($filesOld as $f) {
             unlink($f);
@@ -28,11 +28,14 @@ class RotateTest extends TestCase
         Log::info('test');
 
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
+	    $this->assertFileExists(app()->storagePath().'/logs/worker.log');
 
         $resultCode = Artisan::call('logs:rotate');
 
         $this->assertEquals($resultCode, 0);
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
+	    $this->assertFileExists(app()->storagePath().'/logs/worker.log.1.gz');
+
     }
 
     /** @test **/
@@ -41,6 +44,7 @@ class RotateTest extends TestCase
         Log::info('test');
 
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
+	    $this->assertFileExists(app()->storagePath().'/logs/worker.log');
 
         $this->app['config']->set('rotate.log_compress_files', false);
 
@@ -48,6 +52,7 @@ class RotateTest extends TestCase
 
         $this->assertEquals($resultCode, 0);
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1');
+	    $this->assertFileExists(app()->storagePath().'/logs/worker.log.1');
     }
 
     /** @test **/
@@ -57,10 +62,11 @@ class RotateTest extends TestCase
 
         for ($n = 0; $n < 10; $n++) {
             file_put_contents(app()->storagePath().'/logs/laravel.log', 'test');
+	        file_put_contents(app()->storagePath().'/logs/worker.log', 'test');
             Artisan::call('logs:rotate');
         }
 
-        $filesOld = glob(app()->storagePath().'/logs/laravel.log.*.gz');
+        $filesOld = glob(app()->storagePath().'/logs/{laravel,worker}.log.*.gz',GLOB_BRACE);
 
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.2.gz');
@@ -68,5 +74,13 @@ class RotateTest extends TestCase
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.4.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.5.gz');
         $this->assertFalse(file_exists(app()->storagePath().'/logs/laravel.log.6.gz'));
+
+	    $this->assertFileExists(app()->storagePath().'/logs/worker.log.1.gz');
+	    $this->assertFileExists(app()->storagePath().'/logs/worker.log.2.gz');
+	    $this->assertFileExists(app()->storagePath().'/logs/worker.log.3.gz');
+	    $this->assertFileExists(app()->storagePath().'/logs/worker.log.4.gz');
+	    $this->assertFileExists(app()->storagePath().'/logs/worker.log.5.gz');
+	    $this->assertFalse(file_exists(app()->storagePath().'/logs/worker.log.6.gz'));
+
     }
 }
