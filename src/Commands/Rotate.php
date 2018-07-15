@@ -4,7 +4,6 @@ namespace Cesargb\File\Rotate\Commands;
 
 use Cesargb\File\Rotate as RotateFile;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 
 class Rotate extends Command
 {
