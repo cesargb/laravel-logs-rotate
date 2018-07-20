@@ -10,9 +10,9 @@
     "homepage": "https://github.com/cesargb/laravel-logs-rotate",
     "authors": [
 	{
-		"name": "Cesar Garcia",
-		"email": "cesargb@gmail.com",
-		"homepage": "https://github.com/cesargb",
+        "name": "Cesar Garcia",
+        "email": "cesargb@gmail.com",
+        "homepage": "https://github.com/cesargb",
         "role": "Developer"
 	}
     ],
