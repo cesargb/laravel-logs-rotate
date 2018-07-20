@@ -7,21 +7,12 @@ This package permit rotate logs in Laravel with compression.
 
 ## Instalation
 
-This package can be used in Laravel 5.4 or higher.
+This package can be used in Laravel 5.5 or higher.
 
 You can install the package via composer:
 
 ```bash
 composer require cesargb/laravel-logs-rotate
-```
-
-If you have Laravel 5.4, you must add the service provider in config/app.php file:
-
-```php
-'providers' => [
-    // ...
-    Cesargb\Files\Rotate\RotateServiceProvider::class,
-];
 ```
 
 You can publish config file with:
