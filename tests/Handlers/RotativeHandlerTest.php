@@ -9,6 +9,13 @@ use Cesargb\File\Rotate\Events\RotateWasSuccessful;
 
 class RotativeHandlerTest extends TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->app['config']->set('rotate.log_max_files', 5);
+    }
+
     /** @test **/
     public function it_can_rotate_logs()
     {

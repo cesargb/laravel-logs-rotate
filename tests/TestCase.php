@@ -16,7 +16,6 @@ abstract class TestCase extends Orchestra
 
         Event::fake();
 
-        $this->app['config']->set('app.log', 'single');
         $this->app['config']->set('rotate.log_compress_files', true);
         $this->app['config']->set('rotate.log_max_files', 5);
 
@@ -44,5 +43,7 @@ abstract class TestCase extends Orchestra
                 unlink($f);
             }
         }
+
+
     }
 }
