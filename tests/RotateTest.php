@@ -105,7 +105,6 @@ class RotateTest extends TestCase
         foreach ($files as $file) {
             $this->assertFileNotExists($file.'.1.gz');
         }
-
     }
 
     /** @test **/
