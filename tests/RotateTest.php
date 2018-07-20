@@ -6,7 +6,6 @@ use Monolog\Handler\StreamHandler;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Artisan;
 use Cesargb\File\Rotate\Helpers\Log as LogHelper;
-use Cesargb\File\Rotate\Events\RotateHasFailed;
 use Cesargb\File\Rotate\Events\RotateWasSuccessful;
 use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
 
@@ -90,7 +89,7 @@ class RotateTest extends TestCase
 
         $this->writeLog();
 
-        $this->assertFileExists(app()->storagePath().'/logs/laravel-'.date("Y-m-d").'.log');
+        $this->assertFileExists(app()->storagePath().'/logs/laravel-'.date('Y-m-d').'.log');
 
         $resultCode = Artisan::call('logs:rotate');
 
@@ -98,7 +97,7 @@ class RotateTest extends TestCase
         Event::assertDispatched(RotateIsNotNecessary::class, 0);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileNotExists(app()->storagePath().'/logs/laravel-'.date("Y-m-d").'.log.1.gz');
+        $this->assertFileNotExists(app()->storagePath().'/logs/laravel-'.date('Y-m-d').'.log.1.gz');
     }
 
     /** @test **/
@@ -112,11 +111,10 @@ class RotateTest extends TestCase
                 'handler' => StreamHandler::class,
                 'with' => [
                     'stream' => app()->storagePath().'/logs/custom.log',
-                ]
+                ],
             ]);
 
             $this->app['config']->set('logging.default', 'custom');
-
 
             $this->writeLog();
 
@@ -144,7 +142,7 @@ class RotateTest extends TestCase
                 'handler' => StreamHandler::class,
                 'with' => [
                     'stream' => 'php://stdout',
-                ]
+                ],
             ]);
 
             $this->app['config']->set('logging.default', 'custom');
