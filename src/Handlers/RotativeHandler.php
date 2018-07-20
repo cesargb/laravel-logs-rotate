@@ -25,7 +25,7 @@ class RotativeHandler extends AbstractHandler
         }
 
         $this->file_rotated = $this->rebaseArchiveDir($this->getRotatedFileName());
-        
+
         if ($this->rotate()) {
             $this->close();
 
