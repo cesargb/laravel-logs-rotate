@@ -24,8 +24,8 @@ class RotativeHandler extends AbstractHandler
             return false;
         }
 
-        $this->file_rotated = $this->getRotatedFileName();
-
+        $this->file_rotated = $this->rebaseArchiveDir($this->getRotatedFileName());
+        
         if ($this->rotate()) {
             $this->close();
 
@@ -103,6 +103,6 @@ class RotativeHandler extends AbstractHandler
             }
         }
 
-        return $this->dir_to_archive.'/'.basename(str_replace('*', '1', $glob));
+        return str_replace('*', '1', $glob);
     }
 }

@@ -21,7 +21,16 @@ abstract class AbstractHandler implements HandlerInterface
     {
         $this->file = $file;
         $this->compress = $compress;
-        $this->dir_to_archive = $this->dir_to_archive ?? dirname($file);
+
+        if (empty($dir_to_archive)) {
+            $this->dir_to_archive = dirname($file);
+        } else {
+            if (substr($dir_to_archive, 0 ,1) == '/') {
+                $this->dir_to_archive = $dir_to_archive;
+            } else {
+                $this->dir_to_archive = dirname($file) . '/' . $dir_to_archive;
+            }
+        }
     }
 
     protected function validate()
@@ -67,6 +76,10 @@ abstract class AbstractHandler implements HandlerInterface
         }
 
         return true;
+    }
+
+    protected function rebaseArchiveDir($file) {
+        return $this->dir_to_archive . '/' . basename($file);
     }
 
     protected function close()

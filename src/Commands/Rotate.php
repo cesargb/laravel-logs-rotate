@@ -16,11 +16,12 @@ class Rotate extends Command
     {
         $maxFiles = config('rotate.log_max_files', 5);
         $compress = config('rotate.log_compress_files', true);
+        $archive_dir = config('rotate.archive_dir');
 
         foreach (LogHelper::getLaravelLogFiles() as $file) {
             $this->output->write('Rotate file '.$file.': ');
 
-            $rotate = new RotativeHandler($file, $maxFiles, $compress);
+            $rotate = new RotativeHandler($file, $maxFiles, $compress, $archive_dir);
 
             if ($rotate->run()) {
                 $this->info('ok');

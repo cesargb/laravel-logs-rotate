@@ -27,6 +27,7 @@ class RotateServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             if (config('update.scheduler.check.enable', true)) {
                 $schedule = $this->app->make(Schedule::class);
+
                 $schedule->command('logs:rotate')->cron(config('rotate.logs_rotate_schedule', '0 0 * * *'));
             }
         });
@@ -39,6 +40,6 @@ class RotateServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(__DIR__.'/../config/rotate.php', 'rotate');
     }
 }
