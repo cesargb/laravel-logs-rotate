@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log as LogLaravel;
 
 class Log
 {
-    protected static function laravelVersion()
+    public static function laravelVersion()
     {
         $va = explode('.', App::version(), 3);
 
@@ -30,7 +30,7 @@ class Log
         $files = [];
 
         foreach (self::getHandlers() as $handler) {
-            if ($handler instanceof StreamHandler || $handler instanceof RotatingFileHandler) {
+            if ($handler instanceof StreamHandler && ! $handler instanceof RotatingFileHandler) {
                 $files[] = $handler->getUrl();
             }
         }
@@ -41,7 +41,7 @@ class Log
     public static function closeHandlers()
     {
         foreach (self::getHandlers() as $handler) {
-            if ($handler instanceof StreamHandler || $handler instanceof RotatingFileHandler) {
+            if ($handler instanceof StreamHandler && ! $handler instanceof RotatingFileHandler) {
                 if (method_exists($handler, 'close')) {
                     $handler->close();
                 }

@@ -2,8 +2,11 @@
 
 namespace Cesargb\File\Rotate\Test;
 
+use Monolog\Handler\StreamHandler;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Artisan;
+use Cesargb\File\Rotate\Helpers\Log as LogHelper;
+use Cesargb\File\Rotate\Events\RotateHasFailed;
 use Cesargb\File\Rotate\Events\RotateWasSuccessful;
 use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
 
@@ -52,6 +55,8 @@ class RotateTest extends TestCase
         $this->assertFileExists($archive_folder.'/laravel.log.1.gz');
 
         unlink($archive_folder.'/laravel.log.1.gz');
+
+        rmdir($archive_folder);
     }
 
     /** @test **/
@@ -73,5 +78,83 @@ class RotateTest extends TestCase
         $this->assertFileExists(app()->storagePath().'/logs/'.$archive_folder.'/laravel.log.1.gz');
 
         unlink(app()->storagePath().'/logs/'.$archive_folder.'/laravel.log.1.gz');
+
+        rmdir(app()->storagePath().'/logs/'.$archive_folder);
+    }
+
+    /** @test **/
+    public function it_can_rotate_logs_daily()
+    {
+        $this->app['config']->set('app.log', 'daily');
+        $this->app['config']->set('logging.default', 'daily');
+
+        $this->writeLog();
+
+        $this->assertFileExists(app()->storagePath().'/logs/laravel-'.date("Y-m-d").'.log');
+
+        $resultCode = Artisan::call('logs:rotate');
+
+        Event::assertDispatched(RotateWasSuccessful::class, 0);
+        Event::assertDispatched(RotateIsNotNecessary::class, 0);
+
+        $this->assertEquals($resultCode, 0);
+        $this->assertFileNotExists(app()->storagePath().'/logs/laravel-'.date("Y-m-d").'.log.1.gz');
+    }
+
+    /** @test **/
+    public function it_can_rotate_logs_custom()
+    {
+        if (LogHelper::laravelVersion() == '5.5') {
+            $this->assertTrue(true);
+        } else {
+            $this->app['config']->set('logging.channels.custom', [
+                'driver' => 'monolog',
+                'handler' => StreamHandler::class,
+                'with' => [
+                    'stream' => app()->storagePath().'/logs/custom.log',
+                ]
+            ]);
+
+            $this->app['config']->set('logging.default', 'custom');
+
+
+            $this->writeLog();
+
+            $this->assertFileExists(app()->storagePath().'/logs/custom.log');
+
+            $resultCode = Artisan::call('logs:rotate');
+
+            Event::assertDispatched(RotateWasSuccessful::class, 1);
+
+            $this->assertEquals($resultCode, 0);
+            $this->assertFileExists(app()->storagePath().'/logs/custom.log.1.gz');
+
+            unlink(app()->storagePath().'/logs/custom.log.1.gz');
+        }
+    }
+
+    /** @test **/
+    public function it_can_rotate_logs_custom2()
+    {
+        if (LogHelper::laravelVersion() == '5.5') {
+            $this->assertTrue(true);
+        } else {
+            $this->app['config']->set('logging.channels.custom', [
+                'driver' => 'monolog',
+                'handler' => StreamHandler::class,
+                'with' => [
+                    'stream' => 'php://stdout',
+                ]
+            ]);
+
+            $this->app['config']->set('logging.default', 'custom');
+
+            $resultCode = Artisan::call('logs:rotate');
+
+            Event::assertDispatched(RotateWasSuccessful::class, 0);
+            Event::assertDispatched(RotateIsNotNecessary::class, 1);
+
+            $this->assertEquals($resultCode, 0);
+        }
     }
 }

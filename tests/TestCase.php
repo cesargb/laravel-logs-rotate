@@ -37,13 +37,13 @@ abstract class TestCase extends Orchestra
     protected function cleanLogs()
     {
         foreach (LogHelper::getLaravelLogFiles() as $fileLog) {
-            $filesToRemove = glob($fileLog.'*');
+            $filesToRemove = glob(dirname($fileLog).'/*');
 
             foreach ($filesToRemove as $f) {
-                unlink($f);
+                if (is_file($f) && ! is_dir($f)) {
+                    unlink($f);
+                }
             }
         }
-
-
     }
 }
