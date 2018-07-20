@@ -1,6 +1,6 @@
 <?php
-namespace Cesargb\File\Rotate\Events;
 
+namespace Cesargb\File\Rotate\Events;
 
 class RotateIsNotNecessary
 {

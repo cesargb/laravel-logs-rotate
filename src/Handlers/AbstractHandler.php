@@ -1,10 +1,8 @@
 <?php
+
 namespace Cesargb\File\Rotate\Handlers;
 
 use Exception;
-use Monolog\Handler\StreamHandler;
-use Illuminate\Support\Facades\Log;
-use Monolog\Handler\RotatingFileHandler;
 use Cesargb\File\Rotate\Events\RotateHasFailed;
 use Cesargb\File\Rotate\Helpers\Log as LogHelper;
 use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
