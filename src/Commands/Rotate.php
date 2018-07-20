@@ -2,8 +2,9 @@
 
 namespace Cesargb\File\Rotate\Commands;
 
-use Cesargb\File\Rotate as RotateFile;
 use Illuminate\Console\Command;
+use Cesargb\File\Rotate\Handlers\RotativeHandler;
+use Cesargb\File\Rotate\Helpers\Log as LogHelper;
 
 class Rotate extends Command
 {
@@ -13,16 +14,19 @@ class Rotate extends Command
 
     public function handle()
     {
-        $result = RotateFile::file(
-            app()->storagePath().'/logs/laravel.log',
-            config('rotate.log_max_files', 7),
-            config('rotate.log_compress_files', true)
-        );
+        $maxFiles = config('rotate.log_max_files', 5);
+        $compress = config('rotate.log_compress_files', true);
 
-        if ($result) {
-            $this->info('Logs was rotated');
-        } else {
-            $this->error('Logs rotate failed');
+        foreach (LogHelper::getLaravelLogFiles() as $file) {
+            $this->output->write('Rotate file '.$file.': ');
+
+            $rotate = new RotativeHandler($file, $maxFiles, $compress);
+
+            if ($rotate->run()) {
+                $this->info('ok');
+            } else {
+                $this->error('err');
+            }
         }
     }
 }
