@@ -90,7 +90,11 @@ class RotateTest extends TestCase
 
         $this->writeLog();
 
-        $this->assertFileExists(app()->storagePath().'/logs/laravel-'.date("Y-m-d").'.log');
+        $files = LogHelper::getLaravelLogFiles();
+
+        foreach ($files as $file) {
+            $this->assertFileExists($file);
+        }
 
         $resultCode = Artisan::call('logs:rotate');
 
@@ -98,7 +102,11 @@ class RotateTest extends TestCase
         Event::assertDispatched(RotateIsNotNecessary::class, 0);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileNotExists(app()->storagePath().'/logs/laravel-'.date("Y-m-d").'.log.1.gz');
+
+        foreach ($files as $file) {
+            $this->assertFileNotExists($file.'.1.gz');
+        }
+
     }
 
     /** @test **/
