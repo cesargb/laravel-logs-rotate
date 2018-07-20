@@ -2,8 +2,8 @@
 
 namespace Cesargb\File\Rotate;
 
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Console\Scheduling\Schedule;
 
 class RotateServiceProvider extends ServiceProvider
 {

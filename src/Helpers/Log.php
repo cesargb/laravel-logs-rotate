@@ -1,10 +1,11 @@
 <?php
+
 namespace Cesargb\File\Rotate\Helpers;
 
 use App;
 use Monolog\Handler\StreamHandler;
-use Illuminate\Support\Facades\Log as LogLaravel;
 use Monolog\Handler\RotatingFileHandler;
+use Illuminate\Support\Facades\Log as LogLaravel;
 
 class Log
 {
@@ -12,7 +13,7 @@ class Log
     {
         $va = explode('.', App::version(), 3);
 
-        return $va[0] . '.' . $va[1] ?? '0';
+        return $va[0].'.'.$va[1] ?? '0';
     }
 
     protected static function getHandlers()
@@ -28,7 +29,7 @@ class Log
     {
         $files = [];
 
-        foreach(self::getHandlers() as $handler) {
+        foreach (self::getHandlers() as $handler) {
             if ($handler instanceof StreamHandler || $handler instanceof RotatingFileHandler) {
                 $files[] = $handler->getUrl();
             }
@@ -39,7 +40,7 @@ class Log
 
     public static function closeHandlers()
     {
-        foreach(self::getHandlers() as $handler) {
+        foreach (self::getHandlers() as $handler) {
             if ($handler instanceof StreamHandler || $handler instanceof RotatingFileHandler) {
                 if (method_exists($handler, 'close')) {
                     $handler->close();

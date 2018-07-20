@@ -6,9 +6,8 @@ use Illuminate\Support\Facades\Event;
 use Cesargb\File\Rotate\Test\TestCase;
 use Illuminate\Support\Facades\Artisan;
 use Cesargb\File\Rotate\Events\RotateWasSuccessful;
-use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
 
-class RotativeTest extends TestCase
+class RotativeHandlerTest extends TestCase
 {
     /** @test **/
     public function it_can_rotate_logs()

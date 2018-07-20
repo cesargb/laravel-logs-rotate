@@ -1,4 +1,5 @@
 <?php
+
 namespace Cesargb\File\Rotate\Handlers;
 
 use Cesargb\File\Rotate\Events\RotateHasFailed;
@@ -14,12 +15,12 @@ class RotativeHandler extends AbstractHandler
     {
         parent::__construct($file, $compress, $dir_to_archive);
 
-        $this->max_files= $max_files;
+        $this->max_files = $max_files;
     }
 
     public function run()
     {
-        if  (! $this->validate()) {
+        if (! $this->validate()) {
             return false;
         }
 
@@ -27,7 +28,7 @@ class RotativeHandler extends AbstractHandler
 
         if ($this->rotate()) {
             $this->close();
-            
+
             event(new RotateWasSuccessful($this->file, $this->file_rotated));
 
             return true;
@@ -102,6 +103,6 @@ class RotativeHandler extends AbstractHandler
             }
         }
 
-        return $this->dir_to_archive . '/' . basename(str_replace('*', '1', $glob));
+        return $this->dir_to_archive.'/'.basename(str_replace('*', '1', $glob));
     }
 }

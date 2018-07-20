@@ -1,4 +1,5 @@
 <?php
+
 namespace Cesargb\File\Rotate\Events;
 
 use Exception;
