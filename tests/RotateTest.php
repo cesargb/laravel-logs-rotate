@@ -6,7 +6,6 @@ use Monolog\Handler\StreamHandler;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Artisan;
 use Cesargb\File\Rotate\Helpers\Log as LogHelper;
-use Cesargb\File\Rotate\Events\RotateHasFailed;
 use Cesargb\File\Rotate\Events\RotateWasSuccessful;
 use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
 
@@ -120,11 +119,10 @@ class RotateTest extends TestCase
                 'handler' => StreamHandler::class,
                 'with' => [
                     'stream' => app()->storagePath().'/logs/custom.log',
-                ]
+                ],
             ]);
 
             $this->app['config']->set('logging.default', 'custom');
-
 
             $this->writeLog();
 
@@ -152,7 +150,7 @@ class RotateTest extends TestCase
                 'handler' => StreamHandler::class,
                 'with' => [
                     'stream' => 'php://stdout',
-                ]
+                ],
             ]);
 
             $this->app['config']->set('logging.default', 'custom');
