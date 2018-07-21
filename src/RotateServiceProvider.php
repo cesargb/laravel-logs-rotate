@@ -25,10 +25,14 @@ class RotateServiceProvider extends ServiceProvider
         }
 
         $this->app->booted(function () {
-            if (config('update.scheduler.check.enable', true)) {
+            if (config('rotate.schedule.enable', true)) {
                 $schedule = $this->app->make(Schedule::class);
 
-                $schedule->command('logs:rotate')->cron(config('rotate.logs_rotate_schedule', '0 0 * * *'));
+                $cronOldVersion = config('rotate.logs_rotate_schedule', '0 0 * * *');
+                $cron = config('rotate.schedule.cron', $cronOldVersion);
+                $cron = '* * * * *';
+
+                $schedule->command('rotate:logs')->cron($cron);
             }
         });
     }

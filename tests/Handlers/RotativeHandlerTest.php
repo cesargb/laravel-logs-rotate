@@ -23,7 +23,7 @@ class RotativeHandlerTest extends TestCase
 
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
 
-        $resultCode = Artisan::call('logs:rotate');
+        $resultCode = Artisan::call('rotate:logs');
 
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
@@ -40,7 +40,7 @@ class RotativeHandlerTest extends TestCase
 
         $this->app['config']->set('rotate.log_compress_files', false);
 
-        $resultCode = Artisan::call('logs:rotate');
+        $resultCode = Artisan::call('rotate:logs');
 
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
@@ -58,7 +58,7 @@ class RotativeHandlerTest extends TestCase
         for ($n = 0; $n < 10; $n++) {
             $this->writeLog();
 
-            Artisan::call('logs:rotate');
+            Artisan::call('rotate:logs');
         }
 
         Event::assertDispatched(RotateWasSuccessful::class, 10);

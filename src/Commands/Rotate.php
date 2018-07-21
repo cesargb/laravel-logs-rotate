@@ -8,9 +8,9 @@ use Cesargb\File\Rotate\Helpers\Log as LogHelper;
 
 class Rotate extends Command
 {
-    protected $signature = 'logs:rotate';
+    protected $signature = 'rotate:logs';
 
-    protected $description = 'Rotate logs';
+    protected $description = 'Rotate logs of Laravel';
 
     public function handle()
     {
