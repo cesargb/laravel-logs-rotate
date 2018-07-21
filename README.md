@@ -4,7 +4,7 @@
 
 # Rotate files log with compression
 
-This package permit rotate logs of Laravel with compression.
+This package permit rotate logs file of Laravel with compression.
 
 ## Instalation
 
@@ -18,11 +18,11 @@ composer require cesargb/laravel-logs-rotate
 
 ## Usage
 
-In this moment, all days at 00:00 your App run a schedule to rotate all logs files.
+In this moment, every days at 00:00 your App run a schedule to rotate the Laravel logs files.
 
 ## Custom Usage
 
-If need change the frecuency or other function yo can modifi the config file.
+If need change the frecuency or other function you can modify the config file.
 
 You can publish config file with:
 
@@ -80,6 +80,22 @@ return [
     'log_max_files' => env('LOG_MAX_FILES', 5),
 ];
 ```
+
+## About
+
+You only can rotate the logs file was generate with logger channel StreamHandler.
+
+## Test
+
+Run test with:
+
+```bash
+composer test
+```
+
+## Contributing
+
+All contributing are wellcome
 
 ## License
 
