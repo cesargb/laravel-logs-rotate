@@ -2,17 +2,13 @@
 
 namespace Cesargb\File\Rotate\Test\Commands;
 
-use Monolog\Handler\StreamHandler;
-use Cesargb\File\Rotate\Test\TestCase;
 use Illuminate\Support\Facades\Event;
+use Cesargb\File\Rotate\Test\TestCase;
 use Illuminate\Support\Facades\Artisan;
-use Cesargb\File\Rotate\Helpers\Log as LogHelper;
 use Cesargb\File\Rotate\Events\RotateWasSuccessful;
-use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
 
 class RotateFileTest extends TestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -28,7 +24,7 @@ class RotateFileTest extends TestCase
         $file2 = $this->tmpDir.'/file2';
 
         $resultCode = Artisan::call('rotate:files', [
-            '--file'    => [ $file1, $file2 ],
+            '--file'    => [$file1, $file2],
         ]);
 
         Event::assertDispatched(RotateWasSuccessful::class, 2);
@@ -47,7 +43,7 @@ class RotateFileTest extends TestCase
         $file2 = $this->tmpDir.'/file2';
 
         $resultCode = Artisan::call('rotate:files', [
-            '--file'    => [ $file1, $file2 ],
+            '--file'    => [$file1, $file2],
             '--dir'     => $this->tmpDir.'/archive',
         ]);
 
@@ -69,7 +65,7 @@ class RotateFileTest extends TestCase
             file_put_contents($file, 'test');
 
             $resultCode = Artisan::call('rotate:files', [
-                '--file'        => [ $file ],
+                '--file'        => [$file],
                 '--max-files'    => 3,
             ]);
 

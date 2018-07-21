@@ -6,9 +6,9 @@ use Event;
 use Illuminate\Console\Command;
 use Cesargb\File\Rotate\Events\RotateHasFailed;
 use Cesargb\File\Rotate\Handlers\RotativeHandler;
+use Cesargb\File\Rotate\Helpers\Log as LogHelper;
 use Cesargb\File\Rotate\Events\RotateWasSuccessful;
 use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
-use Cesargb\File\Rotate\Helpers\Log as LogHelper;
 
 class Rotate extends Command
 {
