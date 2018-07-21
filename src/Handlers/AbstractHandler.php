@@ -90,9 +90,9 @@ abstract class AbstractHandler implements HandlerInterface
 
     protected function moveData($fileSource, $fileDestination)
     {
-        $fdSource = fopen($fileSource, "r+");
+        $fdSource = fopen($fileSource, 'r+');
 
-        if (! $fdSource ) {
+        if (! $fdSource) {
             return false;
         }
 
@@ -108,7 +108,7 @@ abstract class AbstractHandler implements HandlerInterface
             return false;
         }
 
-        if (! ftruncate($fdSource, 0)){
+        if (! ftruncate($fdSource, 0)) {
             fclose($fdSource);
 
             unlink($fileDestination);
