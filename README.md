@@ -93,6 +93,10 @@ Run test with:
 composer test
 ```
 
+## Knowledge Issue
+
+While this file is rotate, any logs write in this moment be lost.
+
 ## Contributing
 
 All contributing are wellcome
