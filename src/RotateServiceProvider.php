@@ -30,7 +30,6 @@ class RotateServiceProvider extends ServiceProvider
 
                 $cronOldVersion = config('rotate.logs_rotate_schedule', '0 0 * * *');
                 $cron = config('rotate.schedule.cron', $cronOldVersion);
-                $cron = '* * * * *';
 
                 $schedule->command('rotate:logs')->cron($cron);
             }
