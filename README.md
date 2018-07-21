@@ -20,7 +20,7 @@ composer require cesargb/laravel-logs-rotate
 
 In this moment, every days at 00:00 your App run a schedule to rotate the Laravel logs files.
 
-## Custom Usage
+## Configuration
 
 If need change the frecuency or other function you can modify the config file.
 
