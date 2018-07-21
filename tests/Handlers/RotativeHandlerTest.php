@@ -21,13 +21,14 @@ class RotativeHandlerTest extends TestCase
     {
         $this->writeLog();
 
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
+        $this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
 
         $resultCode = Artisan::call('rotate:logs');
 
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
         $this->assertEquals($resultCode, 0);
+        $this->assertEquals(filesize(app()->storagePath().'/logs/laravel.log'), 0);
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
@@ -36,7 +37,7 @@ class RotativeHandlerTest extends TestCase
     {
         $this->writeLog();
 
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
+        $this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
 
         $this->app['config']->set('rotate.log_compress_files', false);
 
@@ -45,6 +46,7 @@ class RotativeHandlerTest extends TestCase
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
         $this->assertEquals($resultCode, 0);
+        $this->assertEquals(filesize(app()->storagePath().'/logs/laravel.log'), 0);
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1');
     }
 
@@ -58,18 +60,20 @@ class RotativeHandlerTest extends TestCase
         for ($n = 0; $n < 10; $n++) {
             $this->writeLog();
 
+            $this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
+
             Artisan::call('rotate:logs');
         }
 
         Event::assertDispatched(RotateWasSuccessful::class, 10);
 
-        $filesOld = glob(app()->storagePath().'/logs/laravel.log.*.gz');
+        $this->assertEquals(filesize(app()->storagePath().'/logs/laravel.log'), 0);
 
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.2.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.3.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.4.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.5.gz');
-        $this->assertFalse(file_exists(app()->storagePath().'/logs/laravel.log.6.gz'));
+        $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.6.gz');
     }
 }

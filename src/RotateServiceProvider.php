@@ -21,6 +21,7 @@ class RotateServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Commands\Rotate::class,
+                Commands\RotateFile::class,
             ]);
         }
 

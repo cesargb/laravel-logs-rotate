@@ -10,6 +10,8 @@ use Cesargb\File\Rotate\Helpers\Log as LogHelper;
 
 abstract class TestCase extends Orchestra
 {
+    protected $tmpDir;
+
     public function setUp()
     {
         parent::setUp();
@@ -19,7 +21,13 @@ abstract class TestCase extends Orchestra
         $this->app['config']->set('app.log', 'single');
         $this->app['config']->set('rotate.log_compress_files', true);
 
+        $this->tmpDir = dirname(__FILE__).'/tmp';
+
         $this->cleanLogs();
+
+        if (! file_exists($this->tmpDir)) {
+            mkdir($this->tmpDir);
+        }
     }
 
     protected function getPackageProviders($app)
@@ -43,6 +51,22 @@ abstract class TestCase extends Orchestra
                 if (is_file($f) && ! is_dir($f)) {
                     unlink($f);
                 }
+            }
+        }
+
+        $filesToRemove = glob($this->tmpDir.'/*');
+
+        foreach ($filesToRemove as $f) {
+            if (is_file($f) && ! is_dir($f)) {
+                unlink($f);
+            }
+        }
+
+        $filesToRemove = glob($this->tmpDir.'/archive/*');
+
+        foreach ($filesToRemove as $f) {
+            if (is_file($f) && ! is_dir($f)) {
+                unlink($f);
             }
         }
     }

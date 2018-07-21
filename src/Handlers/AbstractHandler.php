@@ -87,4 +87,43 @@ abstract class AbstractHandler implements HandlerInterface
     {
         LogHelper::closeHandlers();
     }
+
+    protected function moveData($fileSource, $fileDestination)
+    {
+        $fdSource = fopen($fileSource, "r+");
+
+        if (! $fdSource ) {
+            return false;
+        }
+
+        if (! flock($fdSource, LOCK_EX)) {
+            fclose($fdSource);
+
+            return false;
+        }
+
+        if (! copy($fileSource, $fileDestination)) {
+            fclose($fdSource);
+
+            return false;
+        }
+
+        if (! ftruncate($fdSource, 0)){
+            fclose($fdSource);
+
+            unlink($fileDestination);
+
+            return false;
+        }
+
+        flock($fdSource, LOCK_UN);
+
+        fflush($fdSource);
+
+        fclose($fdSource);
+
+        clearstatcache();
+
+        return true;
+    }
 }

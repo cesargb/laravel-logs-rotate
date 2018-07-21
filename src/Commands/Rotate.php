@@ -2,8 +2,12 @@
 
 namespace Cesargb\File\Rotate\Commands;
 
+use Event;
 use Illuminate\Console\Command;
+use Cesargb\File\Rotate\Events\RotateHasFailed;
 use Cesargb\File\Rotate\Handlers\RotativeHandler;
+use Cesargb\File\Rotate\Events\RotateWasSuccessful;
+use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
 use Cesargb\File\Rotate\Helpers\Log as LogHelper;
 
 class Rotate extends Command
@@ -18,16 +22,24 @@ class Rotate extends Command
         $compress = config('rotate.log_compress_files', true);
         $archive_dir = config('rotate.archive_dir');
 
+        Event::listen(RotateWasSuccessful::class, function ($event) {
+            $this->line("\t".'<info>Rotated</> to: '.$event->fileRotated);
+        });
+
+        Event::listen(RotateIsNotNecessary::class, function ($event) {
+            $this->line("\t".'<comment>Rotated is nos necessary</>: '.$event->message);
+        });
+
+        Event::listen(RotateHasFailed::class, function ($event) {
+            $this->line("\t".'<error>Rotated failed</>: '.$event->exception->getMessage());
+        });
+
         foreach (LogHelper::getLaravelLogFiles() as $file) {
-            $this->output->write('Rotate file '.$file.': ');
+            $this->line('Rotate file '.$file);
 
             $rotate = new RotativeHandler($file, $maxFiles, $compress, $archive_dir);
 
-            if ($rotate->run()) {
-                $this->info('ok');
-            } else {
-                $this->error('err');
-            }
+            $rotate->run();
         }
     }
 }

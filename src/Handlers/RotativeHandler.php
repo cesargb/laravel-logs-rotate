@@ -44,28 +44,30 @@ class RotativeHandler extends AbstractHandler
         if ($this->compress) {
             $file_tmp_name = tempnam(dirname($this->file), 'laravel_log_rotate');
 
-            rename($this->file, $file_tmp_name);
+            if ($this->moveData($this->file, $file_tmp_name)) {
+                $fd_tmp = fopen($file_tmp_name, 'r');
 
-            $fd_tmp = fopen($file_tmp_name, 'r');
+                if ($fd_tmp) {
+                    $fd_compress = gzopen($this->file_rotated, 'w');
 
-            if ($fd_tmp) {
-                $fd_compress = gzopen($this->file_rotated, 'w');
+                    while (! feof($fd_tmp)) {
+                        gzwrite($fd_compress, fread($fd_tmp, 1024 * 512));
+                    }
 
-                while (! feof($fd_tmp)) {
-                    gzwrite($fd_compress, fread($fd_tmp, 1024 * 512));
+                    gzclose($fd_compress);
+                    fclose($fd_tmp);
+
+                    unlink($file_tmp_name);
+
+                    return true;
+                } else {
+                    return false;
                 }
-
-                gzclose($fd_compress);
-                fclose($fd_tmp);
-
-                unlink($file_tmp_name);
-
-                return true;
             } else {
                 return false;
             }
         } else {
-            if (rename($this->file, $this->file_rotated)) {
+            if ($this->moveData($this->file, $this->file_rotated)) {
                 return true;
             } else {
                 return false;

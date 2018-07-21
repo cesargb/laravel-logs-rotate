@@ -19,7 +19,7 @@ class RotateTest extends TestCase
         Event::assertDispatched(RotateIsNotNecessary::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFalse(file_exists(app()->storagePath().'/logs/laravel.log.1.gz'));
+        $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
     /** @test **/
@@ -32,7 +32,7 @@ class RotateTest extends TestCase
         Event::assertDispatched(RotateIsNotNecessary::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFalse(file_exists(app()->storagePath().'/logs/laravel.log.1.gz'));
+        $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
     /** @test **/
