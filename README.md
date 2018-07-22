@@ -2,9 +2,9 @@
 [![StyleCI](https://styleci.io/repos/119604039/shield?branch=master)](https://styleci.io/repos/119604039)
 [![Latest Stable Version](https://img.shields.io/packagist/v/cesargb/laravel-logs-rotate.svg)](https://packagist.org/packages/cesargb/laravel-logs-rotate)
 
-# Rotate files log with compression
+# Rotate Laravel logs files and compress
 
-This package permit rotate logs file of Laravel with compression.
+This package allows you to rotate the Laravel record file with compression.
 
 ## Instalation
 
@@ -18,11 +18,11 @@ composer require cesargb/laravel-logs-rotate
 
 ## Usage
 
-In this moment, every days at 00:00 your App run a schedule to rotate the Laravel logs files.
+At this moment, every day at 00:00 your application executes a schedule to rotate the Laravel record files.
 
 ## Configuration
 
-If need change the frecuency or other function you can modify the config file.
+If you need to change the frequency or another function, you can modify the config file.
 
 You can publish config file with:
 
@@ -81,9 +81,59 @@ return [
 ];
 ```
 
+## Command
+
+You have a command to rotate other files, `rotate:files`
+
+```bash
+php artisan rotate:files --help
+Description:
+  Rotate files
+
+Usage:
+  rotate:files [options]
+
+Options:
+  -f, --file[=FILE]            Files to rotate (multiple values allowed)
+  -c, --compress[=COMPRESS]    Compress the file rotated [default: "true"]
+  -m, --max-files[=MAX-FILES]  Max files rotated [default: "5"]
+  -d, --dir[=DIR]              Dir where archive the file rotated
+```
+
+## Events
+
+Every time a file is rotated one of these events occurs:
+
+### RotateWasSuccessful
+
+This event will be fired when rotated was successful.
+
+It has two public properties:
+
+* fileSource: the full path of file to rotate
+* fileRotated: the full path of file rotated
+
+### RotateIsNotNecessary
+
+If file log not exists or is empty this event will be fired.
+
+It has two public properties:
+
+* fileSource: the full path of file to rotate
+* message: Descriptive message of the reason
+
+### RotateHasFailed
+
+This event will be fired when something goes wrong while rotated.
+
+It has two public properties:
+
+* fileSource: the full path of file to rotate
+* exception: an object that extends PHP's Exception class.
+
 ## About
 
-You only can rotate the logs file was generate with logger channel StreamHandler.
+You can only rotate the logs file was generate with logger channel StreamHandler.
 
 ## Test
 
@@ -95,11 +145,11 @@ composer test
 
 ## Knowledge Issue
 
-While this file is rotate, any logs write in this moment be lost.
+While the file is being rotated, any record of another process may be lost.
 
 ## Contributing
 
-All contributing are wellcome
+All contributions are welcome.
 
 ## License
 
