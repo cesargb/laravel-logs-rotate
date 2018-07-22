@@ -164,4 +164,24 @@ class RotateTest extends TestCase
             $this->assertEquals($resultCode, 0);
         }
     }
+
+    /** @test **/
+    public function it_can_write_log_after_rotate()
+    {
+        $this->writeLog();
+
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
+
+        $resultCode = Artisan::call('rotate:logs');
+
+        Event::assertDispatched(RotateWasSuccessful::class, 1);
+
+        $this->assertEquals($resultCode, 0);
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
+
+        $this->writeLog();
+
+        $this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
+    }
 }
