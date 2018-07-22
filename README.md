@@ -106,6 +106,8 @@ Every time a file is rotated one of these events occurs:
 
 ### RotateWasSuccessful
 
+`Cesargb\File\Rotate\Events\RotateWasSuccessful`
+
 This event will be fired when rotated was successful.
 
 It has two public properties:
@@ -115,6 +117,8 @@ It has two public properties:
 
 ### RotateIsNotNecessary
 
+`Cesargb\File\Rotate\Events\RotateIsNotNecessary`
+
 If file log not exists or is empty this event will be fired.
 
 It has two public properties:
@@ -123,6 +127,8 @@ It has two public properties:
 * message: Descriptive message of the reason
 
 ### RotateHasFailed
+
+`Cesargb\File\Rotate\Handlers\RotativeHandler`
 
 This event will be fired when something goes wrong while rotated.
 
