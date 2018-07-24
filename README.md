@@ -4,7 +4,7 @@
 
 # Rotate Laravel logs files and compress
 
-This package allows you to rotate the Laravel record file with compression.
+This package allows you to rotate the Laravel record file with compression. This method is useful if you use logger channel `single` (StreamHandler)
 
 ## Instalation
 
@@ -26,7 +26,7 @@ If you need to change the frequency or another function, you can modify the conf
 
 You can publish config file with:
 
-```
+```bash
 php artisan vendor:publish --provider="Cesargb\File\Rotate\RotateServiceProvider" --tag=config
 ```
 This is the contents of the published config/rotate.php config file:
@@ -139,7 +139,7 @@ It has two public properties:
 
 ## About
 
-You can only rotate the logs file was generate with logger channel StreamHandler. [#8](https://github.com/cesargb/laravel-logs-rotate/issues/8)
+You can only rotate the logs file was generate with logger channel StreamHandler.
 
 ## Test
 
@@ -151,7 +151,7 @@ composer test
 
 ## Knowledge Issue
 
-While the file is being rotated, any record of another process may be lost.
+* [#8](https://github.com/cesargb/laravel-logs-rotate/issues/8) While the file is being rotated, any record of another process may be lost.
 
 ## Contributing
 
