@@ -16,8 +16,8 @@ return [
     | Archive Dir
     |--------------------------------------------------------------------------
     |
-    | This value determine the folder where save the files after rotated.
-    | Leave null to archive in the same folder of yours logs.
+    | This value determines the folder where the files are saved.
+    | Leave null to archive in the same folder of your logs.
     |
     */
     'archive_dir'   => null,
@@ -29,7 +29,7 @@ return [
     |
     | Determine when must be run the cron.
     | You can disable the schedule change the option enable at false.
-    | You can change the frecuency with option cron.
+    | You can change the frequency with option cron.
     |
     */
     'schedule' => [
