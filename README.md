@@ -139,7 +139,7 @@ It has two public properties:
 
 ## About
 
-You can only rotate the logs file was generate with logger channel StreamHandler.
+You can only rotate the logs file was generate with logger channel StreamHandler. [#8](https://github.com/cesargb/laravel-logs-rotate/issues/8)
 
 ## Test
 
