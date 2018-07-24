@@ -32,6 +32,8 @@ php artisan vendor:publish --provider="Cesargb\File\Rotate\RotateServiceProvider
 This is the contents of the published config/rotate.php config file:
 
 ```php
+<?php
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -48,8 +50,8 @@ return [
     | Archive Dir
     |--------------------------------------------------------------------------
     |
-    | This value determine the folder where save the files after rotated.
-    | Leave null to archive in the same folder of yours logs.
+    | This value determines the folder where the files are saved.
+    | Leave null to archive in the same folder of your logs.
     |
     */
     'archive_dir'   => null,
@@ -61,7 +63,7 @@ return [
     |
     | Determine when must be run the cron.
     | You can disable the schedule change the option enable at false.
-    | You can change the frecuency with option cron.
+    | You can change the frequency with option cron.
     |
     */
     'schedule' => [
@@ -119,7 +121,7 @@ It has two public properties:
 
 `Cesargb\File\Rotate\Events\RotateIsNotNecessary`
 
-If file log not exists or is empty this event will be fired.
+If file log does not exist or is empty this event will be fired.
 
 It has two public properties:
 
@@ -130,7 +132,7 @@ It has two public properties:
 
 `Cesargb\File\Rotate\Handlers\RotativeHandler`
 
-This event will be fired when something goes wrong while rotated.
+This event will be fired when an error occurs while rotated
 
 It has two public properties:
 
@@ -149,11 +151,11 @@ Run test with:
 composer test
 ```
 
-## Knowledge Issue
+## Knowledge Issues
 
 * [#8](https://github.com/cesargb/laravel-logs-rotate/issues/8) While the file is being rotated, any record of another process may be lost.
 
-## Contributing
+## Contributions
 
 All contributions are welcome.
 
