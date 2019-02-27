@@ -12,7 +12,7 @@ abstract class TestCase extends Orchestra
 {
     protected $tmpDir;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

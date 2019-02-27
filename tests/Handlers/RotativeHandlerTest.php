@@ -9,7 +9,7 @@ use Cesargb\File\Rotate\Events\RotateWasSuccessful;
 
 class RotativeHandlerTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

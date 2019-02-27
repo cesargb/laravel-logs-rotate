@@ -9,7 +9,7 @@ use Cesargb\File\Rotate\Events\RotateWasSuccessful;
 
 class RotateFileTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
