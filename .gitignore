@@ -2,3 +2,4 @@
 /build
 composer.lock
 /tests/tmp
+.phpunit.result.cache
