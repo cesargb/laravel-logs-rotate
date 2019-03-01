@@ -38,13 +38,13 @@ abstract class AbstractHandler implements HandlerInterface
         clearstatcache();
 
         if (! is_file($this->file)) {
-            event(new RotateIsNotNecessary($this->file, 'The file '.$this->file.' nos exists'));
+            event(new RotateIsNotNecessary($this->file, 'File '.$this->file.' does not exists'));
 
             return false;
         }
 
         if (! is_writable($this->file)) {
-            event(new RotateHasFailed($this->file, new Exception('File '.$this->file.' is not writable.')));
+            event(new RotateHasFailed($this->file, new Exception('File '.$this->file.' is not writable')));
 
             return false;
         }
@@ -57,7 +57,7 @@ abstract class AbstractHandler implements HandlerInterface
                     return false;
                 }
             } else {
-                event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive exits and is not a directory')));
+                event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive exists and is not a directory')));
 
                 return false;
             }
@@ -70,7 +70,7 @@ abstract class AbstractHandler implements HandlerInterface
         }
 
         if (filesize($this->file) == 0) {
-            event(new RotateIsNotNecessary($this->file, 'The file '.$this->file.' is empty'));
+            event(new RotateIsNotNecessary($this->file, 'File '.$this->file.' is empty'));
 
             return false;
         }
