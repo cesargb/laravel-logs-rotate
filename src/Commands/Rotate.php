@@ -27,11 +27,11 @@ class Rotate extends Command
         });
 
         Event::listen(RotateIsNotNecessary::class, function ($event) {
-            $this->line("\t".'<comment>Rotated is nos necessary</>: '.$event->message);
+            $this->line("\t".'<comment>Rotation is not necessary</>: '.$event->message);
         });
 
         Event::listen(RotateHasFailed::class, function ($event) {
-            $this->line("\t".'<error>Rotated failed</>: '.$event->exception->getMessage());
+            $this->line("\t".'<error>Rotation failed</>: '.$event->exception->getMessage());
         });
 
         foreach (LogHelper::getLaravelLogFiles() as $file) {
