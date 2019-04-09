@@ -60,5 +60,5 @@ return [
     |   ]
     |
     */
-    'foreing_files' => []
+    'foreing_files' => [],
 ];

@@ -2,12 +2,8 @@
 
 namespace Cesargb\File\Rotate\Commands;
 
-use Event;
 use Illuminate\Console\Command;
-use Cesargb\File\Rotate\Events\RotateHasFailed;
 use Cesargb\File\Rotate\Handlers\RotativeHandler;
-use Cesargb\File\Rotate\Events\RotateWasSuccessful;
-use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
 
 class RotateFile extends Command
 {

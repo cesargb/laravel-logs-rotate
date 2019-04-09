@@ -184,7 +184,7 @@ class RotateTest extends TestCase
         file_put_contents($file, 'test');
 
         $this->app['config']->set('rotate.foreing_files', [
-            $file
+            $file,
         ]);
 
         $resultCode = Artisan::call('rotate:logs');
