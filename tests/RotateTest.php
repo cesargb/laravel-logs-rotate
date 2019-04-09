@@ -11,8 +11,7 @@ use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
 
 class RotateTest extends TestCase
 {
-    /** @test **/
-    public function no_rotate_if_file_logs_not_exits()
+    public function test_no_rotate_if_file_logs_not_exits()
     {
         $resultCode = Artisan::call('rotate:logs');
 
@@ -22,8 +21,7 @@ class RotateTest extends TestCase
         $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
-    /** @test **/
-    public function no_rotate_if_file_logs_is_empty()
+    public function test_no_rotate_if_file_logs_is_empty()
     {
         touch(app()->storagePath().'/logs/laravel.log');
 
@@ -35,8 +33,7 @@ class RotateTest extends TestCase
         $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
-    /** @test **/
-    public function it_can_rotate_logs_in_archive_dir()
+    public function test_it_can_rotate_logs_in_archive_dir()
     {
         $archive_folder = app()->storagePath().'/logs/archive';
 
@@ -58,8 +55,7 @@ class RotateTest extends TestCase
         rmdir($archive_folder);
     }
 
-    /** @test **/
-    public function it_can_rotate_logs_in_archive_dir_relative()
+    public function test_it_can_rotate_logs_in_archive_dir_relative()
     {
         $archive_folder = 'archives';
 
@@ -81,8 +77,7 @@ class RotateTest extends TestCase
         rmdir(app()->storagePath().'/logs/'.$archive_folder);
     }
 
-    /** @test **/
-    public function it_not_rotate_logs_daily()
+    public function test_it_not_rotate_logs_daily()
     {
         if (LogHelper::laravelVersion() == '5.5') {
             $this->assertTrue(true);
@@ -109,8 +104,7 @@ class RotateTest extends TestCase
         }
     }
 
-    /** @test **/
-    public function it_can_rotate_logs_custom_stream_file()
+    public function test_it_can_rotate_logs_custom_stream_file()
     {
         if (LogHelper::laravelVersion() == '5.5') {
             $this->assertTrue(true);
@@ -140,8 +134,7 @@ class RotateTest extends TestCase
         }
     }
 
-    /** @test **/
-    public function it_not_rotate_logs_custom_stream_std()
+    public function test_it_not_rotate_logs_custom_stream_std()
     {
         if (LogHelper::laravelVersion() == '5.5') {
             $this->assertTrue(true);
@@ -165,8 +158,7 @@ class RotateTest extends TestCase
         }
     }
 
-    /** @test **/
-    public function it_can_write_log_after_rotate()
+    public function test_it_can_write_log_after_rotate()
     {
         $this->writeLog();
 
@@ -183,5 +175,28 @@ class RotateTest extends TestCase
         $this->writeLog();
 
         $this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
+    }
+
+    public function test_rotate_foreing_files()
+    {
+        $file = storage_path('logs/foreing_file.log');
+
+        file_put_contents($file, 'test');
+
+        $this->app['config']->set('rotate.foreing_files', [
+            $file
+        ]);
+
+        $resultCode = Artisan::call('rotate:logs');
+
+        Event::assertDispatched(RotateWasSuccessful::class, 1);
+
+        $this->assertEquals($resultCode, 0);
+
+        $this->assertFileExists($file);
+        $this->assertFileExists(storage_path('logs/foreing_file.log.1.gz'));
+
+        unlink($file);
+        unlink(storage_path('logs/foreing_file.log.1.gz'));
     }
 }

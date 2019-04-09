@@ -46,4 +46,19 @@ return [
     |
     */
     'log_max_files' => env('LOG_MAX_FILES', 5),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Other files to rotated
+    |--------------------------------------------------------------------------
+    |
+    | Array the other foreing files
+    |
+    | Example:
+    |   'foreing_files' => [
+            storage_path('/logs/worker.log')
+    |   ]
+    |
+    */
+    'foreing_files' => []
 ];

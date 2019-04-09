@@ -2,13 +2,9 @@
 
 namespace Cesargb\File\Rotate\Commands;
 
-use Event;
 use Illuminate\Console\Command;
-use Cesargb\File\Rotate\Events\RotateHasFailed;
 use Cesargb\File\Rotate\Handlers\RotativeHandler;
 use Cesargb\File\Rotate\Helpers\Log as LogHelper;
-use Cesargb\File\Rotate\Events\RotateWasSuccessful;
-use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
 
 class Rotate extends Command
 {
@@ -18,28 +14,42 @@ class Rotate extends Command
 
     public function handle()
     {
-        $maxFiles = config('rotate.log_max_files', 5);
-        $compress = config('rotate.log_compress_files', true);
-        $archive_dir = config('rotate.archive_dir');
+        $this->rotateLaravelLogs();
 
-        Event::listen(RotateWasSuccessful::class, function ($event) {
-            $this->line("\t".'<info>Rotated</> to: '.$event->fileRotated);
-        });
+        $this->rotareForeingFiles();
+    }
 
-        Event::listen(RotateIsNotNecessary::class, function ($event) {
-            $this->line("\t".'<comment>Rotation is not necessary</>: '.$event->message);
-        });
-
-        Event::listen(RotateHasFailed::class, function ($event) {
-            $this->line("\t".'<error>Rotation failed</>: '.$event->exception->getMessage());
-        });
-
+    protected function rotateLaravelLogs()
+    {
         foreach (LogHelper::getLaravelLogFiles() as $file) {
-            $this->line('Rotate file '.$file);
+            $this->line('Rotate file: '.$file);
 
-            $rotate = new RotativeHandler($file, $maxFiles, $compress, $archive_dir);
+            $this->rotateFile($file);
+        }
+    }
 
-            $rotate->run();
+    protected function rotareForeingFiles()
+    {
+        foreach (config('rotate.foreing_files', []) as $file) {
+            $this->line('Rotate file: '.$file);
+
+            $this->rotateFile($file);
+        }
+    }
+
+    protected function rotateFile($file)
+    {
+        $rotate = new RotativeHandler(
+            $file,
+            config('rotate.log_max_files', 5),
+            config('rotate.log_compress_files', true),
+            config('rotate.archive_dir')
+        );
+
+        if ($rotate->run()) {
+            $this->line("\t".'<info>Rotated</>');
+        } else {
+            $this->line("\t".'<comment>Not rotated</>');
         }
     }
 }
