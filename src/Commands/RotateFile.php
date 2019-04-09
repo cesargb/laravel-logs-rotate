@@ -21,29 +21,21 @@ class RotateFile extends Command
 
     public function handle()
     {
-        $files = $this->option('file');
-        $compress = $this->option('compress');
-        $maxFiles = $this->option('max-files');
-        $dir = $this->option('dir');
-
-        Event::listen(RotateWasSuccessful::class, function ($event) {
-            $this->line("\t".'<info>Rotated</> to: '.$event->fileRotated);
-        });
-
-        Event::listen(RotateIsNotNecessary::class, function ($event) {
-            $this->line("\t".'<comment>Rotation is not necessary</>: '.$event->message);
-        });
-
-        Event::listen(RotateHasFailed::class, function ($event) {
-            $this->line("\t".'<error>Rotation failed</>: '.$event->exception->getMessage());
-        });
-
-        foreach ($files as $file) {
+        foreach ($this->option('file') as $file) {
             $this->line('Rotate file '.$file.': ');
 
-            $rotate = new RotativeHandler($file, $maxFiles, $compress, $dir);
+            $rotate = new RotativeHandler(
+                $file,
+                $this->option('max-files'),
+                $this->option('compress'),
+                $this->option('dir')
+            );
 
-            $rotate->run();
+            if ($rotate->run()) {
+                $this->line("\t".'<info>Rotated</>');
+            } else {
+                $this->line("\t".'<comment>Not rotated</>');
+            }
         }
     }
 }
