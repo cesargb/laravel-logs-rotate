@@ -2,8 +2,8 @@
 
 namespace Cesargb\File\Rotate\Helpers;
 
-use App;
 use Monolog\Handler\StreamHandler;
+use Illuminate\Support\Facades\App;
 use Monolog\Handler\RotatingFileHandler;
 use Illuminate\Support\Facades\Log as LogLaravel;
 
