@@ -33,7 +33,7 @@ class RotativeHandler extends AbstractHandler
 
             return true;
         } else {
-            event(new RotateHasFailed($this->file, new Exception('Failed to move file '.$this->file.' to '.$this->file_rotated)));
+            event(new RotateHasFailed($this->file, new \Exception('Failed to move file '.$this->file.' to '.$this->file_rotated)));
 
             return false;
         }
