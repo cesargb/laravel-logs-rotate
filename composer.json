@@ -42,7 +42,7 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit --colors=always",
-        "stan": "vendor/bin/phpstan analyse src tests --no-progress"
+        "stan": "vendor/bin/phpstan analyse src tests --no-progress -l 0"
     },
     "extra": {
         "laravel": {
