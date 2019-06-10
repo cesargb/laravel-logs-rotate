@@ -27,7 +27,8 @@
     },
     "require-dev": {
         "orchestra/testbench": "^3.5",
-        "phpunit/phpunit": "^8.0"
+        "phpunit/phpunit": "^8.0",
+        "phpstan/phpstan": "^0.11.8"
     },
     "autoload": {
         "psr-4": {
@@ -40,7 +41,8 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --colors=always"
+        "test": "vendor/bin/phpunit --colors=always",
+        "stan": "vendor/bin/phpstan analyse src tests --no-progress"
     },
     "extra": {
         "laravel": {
