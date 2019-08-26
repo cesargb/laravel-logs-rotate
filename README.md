@@ -6,7 +6,7 @@
 
 This package allows you to rotate the Laravel record file with compression. This method is useful if you use logger channel `single` (StreamHandler)
 
-## Instalation
+## Installation
 
 This package can be used in Laravel 5.5 or higher.
 
