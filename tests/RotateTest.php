@@ -2,12 +2,12 @@
 
 namespace Cesargb\File\Rotate\Test;
 
-use Monolog\Handler\StreamHandler;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Artisan;
-use Cesargb\File\Rotate\Helpers\Log as LogHelper;
-use Cesargb\File\Rotate\Events\RotateWasSuccessful;
 use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
+use Cesargb\File\Rotate\Events\RotateWasSuccessful;
+use Cesargb\File\Rotate\Helpers\Log as LogHelper;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
+use Monolog\Handler\StreamHandler;
 
 class RotateTest extends TestCase
 {

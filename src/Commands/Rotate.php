@@ -2,9 +2,9 @@
 
 namespace Cesargb\File\Rotate\Commands;
 
-use Illuminate\Console\Command;
 use Cesargb\File\Rotate\Handlers\RotativeHandler;
 use Cesargb\File\Rotate\Helpers\Log as LogHelper;
+use Illuminate\Console\Command;
 
 class Rotate extends Command
 {

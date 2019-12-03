@@ -2,8 +2,8 @@
 
 namespace Cesargb\File\Rotate\Commands;
 
-use Illuminate\Console\Command;
 use Cesargb\File\Rotate\Handlers\RotativeHandler;
+use Illuminate\Console\Command;
 
 class RotateFile extends Command
 {

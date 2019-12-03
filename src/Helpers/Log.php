@@ -2,10 +2,10 @@
 
 namespace Cesargb\File\Rotate\Helpers;
 
-use Monolog\Handler\StreamHandler;
 use Illuminate\Support\Facades\App;
-use Monolog\Handler\RotatingFileHandler;
 use Illuminate\Support\Facades\Log as LogLaravel;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Handler\StreamHandler;
 
 class Log
 {

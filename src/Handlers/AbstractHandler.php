@@ -2,10 +2,10 @@
 
 namespace Cesargb\File\Rotate\Handlers;
 
-use Exception;
 use Cesargb\File\Rotate\Events\RotateHasFailed;
-use Cesargb\File\Rotate\Helpers\Log as LogHelper;
 use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
+use Cesargb\File\Rotate\Helpers\Log as LogHelper;
+use Exception;
 
 abstract class AbstractHandler implements HandlerInterface
 {
