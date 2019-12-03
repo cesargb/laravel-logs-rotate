@@ -2,11 +2,11 @@
 
 namespace Cesargb\File\Rotate\Test;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Event;
-use Cesargb\File\Rotate\RotateServiceProvider;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Cesargb\File\Rotate\Helpers\Log as LogHelper;
+use Cesargb\File\Rotate\RotateServiceProvider;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {

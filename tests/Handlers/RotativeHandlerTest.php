@@ -2,10 +2,10 @@
 
 namespace Cesargb\File\Rotate\Test\Handlers;
 
-use Illuminate\Support\Facades\Event;
+use Cesargb\File\Rotate\Events\RotateWasSuccessful;
 use Cesargb\File\Rotate\Test\TestCase;
 use Illuminate\Support\Facades\Artisan;
-use Cesargb\File\Rotate\Events\RotateWasSuccessful;
+use Illuminate\Support\Facades\Event;
 
 class RotativeHandlerTest extends TestCase
 {
