@@ -37,8 +37,19 @@ abstract class AbstractHandler implements HandlerInterface
     {
         clearstatcache();
 
+        return $this->validateFile() && $this->validateDirectory();
+    }
+
+    private function validateFile(): bool
+    {
         if (! is_file($this->file)) {
             event(new RotateIsNotNecessary($this->file, 'File '.$this->file.' does not exists'));
+
+            return false;
+        }
+
+        if (filesize($this->file) == 0) {
+            event(new RotateIsNotNecessary($this->file, 'File '.$this->file.' is empty'));
 
             return false;
         }
@@ -49,28 +60,29 @@ abstract class AbstractHandler implements HandlerInterface
             return false;
         }
 
-        if (! is_dir($this->dir_to_archive)) {
-            if (! file_exists($this->dir_to_archive)) {
-                if (! mkdir($this->dir_to_archive, 0777, true)) {
-                    event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive logs is not writable')));
+        return true;
+    }
 
-                    return false;
-                }
-            } else {
-                event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive exists and is not a directory')));
+    private function validateDirectory(): bool
+    {
+        if (is_dir($this->dir_to_archive)) {
+            if (! is_writable($this->dir_to_archive)) {
+                event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive logs is not writable')));
 
                 return false;
             }
+
+            return true;
         }
 
-        if (! is_writable($this->dir_to_archive)) {
-            event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive logs is not writable')));
+        if (file_exists($this->dir_to_archive)) {
+            event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive exists and is not a directory')));
 
             return false;
         }
 
-        if (filesize($this->file) == 0) {
-            event(new RotateIsNotNecessary($this->file, 'File '.$this->file.' is empty'));
+        if (! mkdir($this->dir_to_archive, 0777, true)) {
+            event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive logs is not writable')));
 
             return false;
         }
