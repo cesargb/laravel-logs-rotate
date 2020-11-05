@@ -42,37 +42,31 @@ class RotativeHandler extends AbstractHandler
     protected function rotate()
     {
         if ($this->compress) {
-            $file_tmp_name = tempnam(dirname($this->file), 'laravel_log_rotate');
+            return $this->moveData($this->file, $this->file_rotated);
+        }
 
-            if ($this->moveData($this->file, $file_tmp_name)) {
-                $fd_tmp = fopen($file_tmp_name, 'r');
+        $file_tmp_name = tempnam(dirname($this->file), 'laravel_log_rotate');
 
-                if ($fd_tmp) {
-                    $fd_compress = gzopen($this->file_rotated, 'w');
+        if ($this->moveData($this->file, $file_tmp_name)) {
+            $fd_tmp = fopen($file_tmp_name, 'r');
 
-                    while (! feof($fd_tmp)) {
-                        gzwrite($fd_compress, fread($fd_tmp, 1024 * 512));
-                    }
+            if ($fd_tmp) {
+                $fd_compress = gzopen($this->file_rotated, 'w');
 
-                    gzclose($fd_compress);
-                    fclose($fd_tmp);
-
-                    unlink($file_tmp_name);
-
-                    return true;
-                } else {
-                    return false;
+                while (! feof($fd_tmp)) {
+                    gzwrite($fd_compress, fread($fd_tmp, 1024 * 512));
                 }
-            } else {
-                return false;
-            }
-        } else {
-            if ($this->moveData($this->file, $this->file_rotated)) {
+
+                gzclose($fd_compress);
+                fclose($fd_tmp);
+
+                unlink($file_tmp_name);
+
                 return true;
-            } else {
-                return false;
             }
         }
+
+        return false;
     }
 
     protected function getRotatedFileName()
