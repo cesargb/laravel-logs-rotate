@@ -71,34 +71,39 @@ class RotativeHandler extends AbstractHandler
 
     protected function getRotatedFileName()
     {
-        $fileInfo = pathinfo($this->file);
+        $patternGlob = $this->getPatternGlob(pathinfo($this->file));
 
-        $glob = $fileInfo['dirname'].'/'.$fileInfo['filename'];
-
-        if (! empty($fileInfo['extension'])) {
-            $glob .= '.'.$fileInfo['extension'];
-        }
-
-        $glob .= '.*';
-
-        if ($this->compress) {
-            $glob .= '.'.self::EXTENSION_COMPRESS;
-        }
-
-        $curFiles = glob($glob);
+        $curFiles = glob($patternGlob);
 
         for ($n = count($curFiles); $n > 0; $n--) {
-            $file_to_move = str_replace('*', $n, $glob);
+            $file_to_move = str_replace('*', $n, $patternGlob);
 
             if (file_exists($file_to_move)) {
                 if ($this->max_files > 0 && $n >= $this->max_files) {
                     unlink($file_to_move);
                 } else {
-                    rename($file_to_move, str_replace('*', $n + 1, $glob));
+                    rename($file_to_move, str_replace('*', $n + 1, $patternGlob));
                 }
             }
         }
 
-        return str_replace('*', '1', $glob);
+        return str_replace('*', '1', $patternGlob);
+    }
+
+    private function getPatternGlob($fileInfo): string
+    {
+        $patternGlob = $fileInfo['dirname'].'/'.$fileInfo['filename'];
+
+        if (! empty($fileInfo['extension'])) {
+            $patternGlob .= '.'.$fileInfo['extension'];
+        }
+
+        $patternGlob .= '.*';
+
+        if ($this->compress) {
+            $patternGlob .= '.'.self::EXTENSION_COMPRESS;
+        }
+
+        return $patternGlob;
     }
 }
