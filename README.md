@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cesargb/laravel-logs-rotate.svg?branch=master)](https://travis-ci.org/cesargb/laravel-logs-rotate)
+![run-tests](https://github.com/cesargb/laravel-logs-rotate/workflows/run-tests/badge.svg)
 [![StyleCI](https://styleci.io/repos/119604039/shield?branch=master)](https://styleci.io/repos/119604039)
 [![Latest Stable Version](https://img.shields.io/packagist/v/cesargb/laravel-logs-rotate.svg)](https://packagist.org/packages/cesargb/laravel-logs-rotate)
 
