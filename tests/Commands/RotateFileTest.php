@@ -18,13 +18,13 @@ class RotateFileTest extends TestCase
     }
 
     /** @test **/
-    public function it_can_rotate_file()
+    public function itCanRotateFile()
     {
         $file1 = $this->tmpDir.'/file1';
         $file2 = $this->tmpDir.'/file2';
 
         $resultCode = Artisan::call('rotate:files', [
-            '--file'    => [$file1, $file2],
+            '--file' => [$file1, $file2],
         ]);
 
         Event::assertDispatched(RotateWasSuccessful::class, 2);
@@ -37,14 +37,14 @@ class RotateFileTest extends TestCase
     }
 
     /** @test **/
-    public function it_can_rotate_file_archive()
+    public function itCanRotateFileArchive()
     {
         $file1 = $this->tmpDir.'/file1';
         $file2 = $this->tmpDir.'/file2';
 
         $resultCode = Artisan::call('rotate:files', [
-            '--file'    => [$file1, $file2],
-            '--dir'     => $this->tmpDir.'/archive',
+            '--file' => [$file1, $file2],
+            '--dir' => $this->tmpDir.'/archive',
         ]);
 
         Event::assertDispatched(RotateWasSuccessful::class, 2);
@@ -57,16 +57,16 @@ class RotateFileTest extends TestCase
     }
 
     /** @test **/
-    public function it_can_rotate_file_max()
+    public function itCanRotateFileMax()
     {
         $file = $this->tmpDir.'/file1';
 
-        for ($n = 0; $n < 5; $n++) {
+        for ($n = 0; $n < 5; ++$n) {
             file_put_contents($file, 'test');
 
             $resultCode = Artisan::call('rotate:files', [
-                '--file'        => [$file],
-                '--max-files'    => 3,
+                '--file' => [$file],
+                '--max-files' => 3,
             ]);
 
             $this->assertEquals($resultCode, 0);
@@ -76,10 +76,10 @@ class RotateFileTest extends TestCase
 
         $this->assertEquals(filesize($file), 0);
 
-        for ($n = 1; $n < 4; $n++) {
+        for ($n = 1; $n < 4; ++$n) {
             $this->assertFileExists($file.'.'.$n.'.gz');
         }
 
-        $this->assertFileNotExists($file.basename($file).'.4.gz');
+        $this->assertFileDoesNotExist($file.basename($file).'.4.gz');
     }
 }

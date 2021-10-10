@@ -16,7 +16,7 @@ class RotativeHandlerTest extends TestCase
         $this->app['config']->set('rotate.log_max_files', 5);
     }
 
-    public function test_it_can_rotate_logs()
+    public function testItCanRotateLogs()
     {
         $this->writeLog();
 
@@ -31,7 +31,7 @@ class RotativeHandlerTest extends TestCase
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
-    public function test_it_can_rotate_logs_withoutcompress()
+    public function testItCanRotateLogsWithoutcompress()
     {
         $this->writeLog();
 
@@ -48,13 +48,13 @@ class RotativeHandlerTest extends TestCase
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1');
     }
 
-    public function test_it_can_rotate_logs_with_maxfiles()
+    public function testItCanRotateLogsWithMaxfiles()
     {
         Event::fake();
 
         $this->app['config']->set('rotate.log_compress_files', true);
 
-        for ($n = 0; $n < 10; $n++) {
+        for ($n = 0; $n < 10; ++$n) {
             $this->writeLog();
 
             $this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
@@ -71,6 +71,6 @@ class RotativeHandlerTest extends TestCase
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.3.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.4.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.5.gz');
-        $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.6.gz');
+        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.6.gz');
     }
 }
