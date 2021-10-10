@@ -54,7 +54,7 @@ class RotativeHandlerTest extends TestCase
 
         $this->app['config']->set('rotate.log_compress_files', true);
 
-        for ($n = 0; $n < 10; ++$n) {
+        for ($n = 0; $n < 10; $n++) {
             $this->writeLog();
 
             $this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
