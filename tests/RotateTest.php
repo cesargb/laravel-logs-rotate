@@ -103,12 +103,12 @@ class RotateTest extends TestCase
     public function testItCanRotateLogsCustomStreamFile()
     {
         $this->app['config']->set('logging.channels.custom', [
-                'driver' => 'monolog',
-                'handler' => StreamHandler::class,
-                'with' => [
-                    'stream' => app()->storagePath().'/logs/custom.log',
-                ],
-            ]);
+            'driver' => 'monolog',
+            'handler' => StreamHandler::class,
+            'with' => [
+                'stream' => app()->storagePath().'/logs/custom.log',
+            ],
+        ]);
 
         $this->app['config']->set('logging.default', 'custom');
 
@@ -129,12 +129,12 @@ class RotateTest extends TestCase
     public function testItNotRotateLogsCustomStreamStd()
     {
         $this->app['config']->set('logging.channels.custom', [
-                'driver' => 'monolog',
-                'handler' => StreamHandler::class,
-                'with' => [
-                    'stream' => 'php://stdout',
-                ],
-            ]);
+            'driver' => 'monolog',
+            'handler' => StreamHandler::class,
+            'with' => [
+                'stream' => 'php://stdout',
+            ],
+        ]);
 
         $this->app['config']->set('logging.default', 'custom');
 

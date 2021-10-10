@@ -61,7 +61,7 @@ class RotateFileTest extends TestCase
     {
         $file = $this->tmpDir.'/file1';
 
-        for ($n = 0; $n < 5; ++$n) {
+        for ($n = 0; $n < 5; $n++) {
             file_put_contents($file, 'test');
 
             $resultCode = Artisan::call('rotate:files', [
@@ -76,7 +76,7 @@ class RotateFileTest extends TestCase
 
         $this->assertEquals(filesize($file), 0);
 
-        for ($n = 1; $n < 4; ++$n) {
+        for ($n = 1; $n < 4; $n++) {
             $this->assertFileExists($file.'.'.$n.'.gz');
         }
 
