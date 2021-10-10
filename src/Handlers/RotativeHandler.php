@@ -7,7 +7,7 @@ use Cesargb\File\Rotate\Events\RotateWasSuccessful;
 
 class RotativeHandler extends AbstractHandler
 {
-    const EXTENSION_COMPRESS = 'gz';
+    public const EXTENSION_COMPRESS = 'gz';
 
     protected $max_files;
 
@@ -20,7 +20,7 @@ class RotativeHandler extends AbstractHandler
 
     public function run()
     {
-        if (! $this->validate()) {
+        if (!$this->validate()) {
             return false;
         }
 
@@ -50,10 +50,10 @@ class RotativeHandler extends AbstractHandler
         if ($this->moveData($this->file, $file_tmp_name)) {
             $fd_tmp = fopen($file_tmp_name, 'r');
 
-            if ($fd_tmp) {
+            if ($fd_tmp !== false) {
                 $fd_compress = gzopen($this->file_rotated, 'w');
 
-                while (! feof($fd_tmp)) {
+                while (!feof($fd_tmp)) {
                     gzwrite($fd_compress, fread($fd_tmp, 1024 * 512));
                 }
 
@@ -75,7 +75,7 @@ class RotativeHandler extends AbstractHandler
 
         $curFiles = glob($patternGlob);
 
-        for ($n = count($curFiles); $n > 0; $n--) {
+        for ($n = count($curFiles); $n > 0; --$n) {
             $file_to_move = str_replace('*', $n, $patternGlob);
 
             if (file_exists($file_to_move)) {
@@ -94,7 +94,7 @@ class RotativeHandler extends AbstractHandler
     {
         $patternGlob = $fileInfo['dirname'].'/'.$fileInfo['filename'];
 
-        if (! empty($fileInfo['extension'])) {
+        if (!empty($fileInfo['extension'])) {
             $patternGlob .= '.'.$fileInfo['extension'];
         }
 
