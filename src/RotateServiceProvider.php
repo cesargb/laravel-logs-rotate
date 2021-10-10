@@ -40,7 +40,7 @@ class RotateServiceProvider extends ServiceProvider
 
     private function registerSchedule()
     {
-        if (!config('rotate.schedule.enable', true)) {
+        if (! config('rotate.schedule.enable', true)) {
             return;
         }
 
