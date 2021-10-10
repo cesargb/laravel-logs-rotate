@@ -18,7 +18,7 @@ class Log
 
     protected static function getHandlers()
     {
-        return LogLaravel::driver()->getHandlers();
+        return LogLaravel::getHandlers();
     }
 
     public static function getLaravelLogFiles()
