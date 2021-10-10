@@ -22,8 +22,8 @@ class RotateFile extends Command
 
             $rotate = new RotativeHandler(
                 $file,
-                $this->option('max-files'),
-                $this->option('compress'),
+                (int) $this->option('max-files'),
+                (bool) $this->option('compress'),
                 $this->option('dir')
             );
 
