@@ -13,7 +13,7 @@ class ScheduleTest extends TestCase
 
     private function scheduleRegistered(): bool
     {
-        return !is_null($this->schedule());
+        return ! is_null($this->schedule());
     }
 
     private function schedule()
