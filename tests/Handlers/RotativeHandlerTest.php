@@ -71,6 +71,6 @@ class RotativeHandlerTest extends TestCase
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.3.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.4.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.5.gz');
-        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.6.gz');
+        $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.6.gz');
     }
 }

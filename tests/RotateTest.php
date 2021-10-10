@@ -18,7 +18,7 @@ class RotateTest extends TestCase
         Event::assertDispatched(RotateIsNotNecessary::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.1.gz');
+        $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
     public function testNoRotateIfFileLogsIsEmpty()
@@ -30,7 +30,7 @@ class RotateTest extends TestCase
         Event::assertDispatched(RotateIsNotNecessary::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.1.gz');
+        $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
     public function testItCanRotateLogsInArchiveDir()
@@ -96,7 +96,7 @@ class RotateTest extends TestCase
         $this->assertEquals($resultCode, 0);
 
         foreach ($files as $file) {
-            $this->assertFileDoesNotExist($file.'.1.gz');
+            $this->assertFileNotExists($file.'.1.gz');
         }
     }
 

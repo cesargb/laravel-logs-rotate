@@ -80,6 +80,6 @@ class RotateFileTest extends TestCase
             $this->assertFileExists($file.'.'.$n.'.gz');
         }
 
-        $this->assertFileDoesNotExist($file.basename($file).'.4.gz');
+        $this->assertFileNotExists($file.basename($file).'.4.gz');
     }
 }
