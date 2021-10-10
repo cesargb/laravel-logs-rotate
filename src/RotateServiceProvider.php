@@ -23,18 +23,9 @@ class RotateServiceProvider extends ServiceProvider
                 Commands\Rotate::class,
                 Commands\RotateFile::class,
             ]);
+
+            $this->registerSchedule();
         }
-
-        $this->app->booted(function () {
-            if (config('rotate.schedule.enable', true)) {
-                $schedule = $this->app->make(Schedule::class);
-
-                $cronOldVersion = config('rotate.logs_rotate_schedule', '0 0 * * *');
-                $cron = config('rotate.schedule.cron', $cronOldVersion);
-
-                $schedule->command('rotate:logs')->cron($cron);
-            }
-        });
     }
 
     /**
@@ -45,5 +36,19 @@ class RotateServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/rotate.php', 'rotate');
+    }
+
+    private function registerSchedule()
+    {
+        if (! config('rotate.schedule.enable', true)) {
+            return;
+        }
+
+        $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
+            $cronOldVersion = config('rotate.logs_rotate_schedule', '0 0 * * *');
+            $cron = config('rotate.schedule.cron', $cronOldVersion);
+
+            $schedule->command('rotate:logs')->cron($cron);
+        });
     }
 }
