@@ -16,11 +16,11 @@ class RotateServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__.'/../config/rotate.php' => config_path('rotate.php'),
-        ], 'config');
-
         if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/rotate.php' => $this->app->configPath('rotate.php'),
+            ], 'config');
+
             $this->commands([
                 RotateCommand::class,
                 RotateFileCommand::class,
