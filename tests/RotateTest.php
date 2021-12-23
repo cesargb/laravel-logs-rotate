@@ -129,7 +129,7 @@ class RotateTest extends TestCase
 
         file_put_contents($file, 'test');
 
-        $this->app['config']->set('rotate.foreing_files', [
+        $this->app['config']->set('rotate.foreign_files', [
             $file,
         ]);
 

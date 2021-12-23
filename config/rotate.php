@@ -44,10 +44,10 @@ return [
     | Array the other foreing files
     |
     | Example:
-    |   'foreing_files' => [
+    |   'foreign_files' => [
             storage_path('/logs/worker.log')
     |   ]
     |
     */
-    'foreing_files' => [],
+    'foreign_files' => [],
 ];

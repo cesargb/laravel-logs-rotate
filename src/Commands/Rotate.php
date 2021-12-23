@@ -30,7 +30,7 @@ class Rotate extends Command
 
     protected function rotareForeingFiles()
     {
-        foreach (config('rotate.foreing_files', []) as $file) {
+        foreach (config('rotate.foreign_files', []) as $file) {
             $this->line('Rotate file: '.$file);
 
             $this->rotateFile($file);
