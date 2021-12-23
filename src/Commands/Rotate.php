@@ -39,19 +39,6 @@ class Rotate extends Command
 
     protected function rotateFile(string $filename)
     {
-        // $rotate = new RotativeHandler(
-        //     $file,
-        //     config('rotate.log_max_files', 5),
-        //     config('rotate.log_compress_files', true),
-        //     config('rotate.archive_dir')
-        // );
-
-        // if ($rotate->run()) {
-        //     $this->line("\t".'<info>Rotated</>');
-        // } else {
-        //     $this->line("\t".'<comment>Not rotated</>');
-        // }
-
         $rotation = new LaravelLogRotate();
 
         $rotation->file($filename);
