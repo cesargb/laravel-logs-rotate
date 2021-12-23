@@ -41,7 +41,7 @@ abstract class AbstractHandler implements HandlerInterface
 
     private function validateFile(): bool
     {
-        if (!is_file($this->file)) {
+        if (! is_file($this->file)) {
             return false;
         }
 
@@ -49,7 +49,7 @@ abstract class AbstractHandler implements HandlerInterface
             return false;
         }
 
-        if (!is_writable($this->file)) {
+        if (! is_writable($this->file)) {
             return false;
         }
 
@@ -59,7 +59,7 @@ abstract class AbstractHandler implements HandlerInterface
     private function validateDirectory(): bool
     {
         if (is_dir($this->dir_to_archive)) {
-            if (!is_writable($this->dir_to_archive)) {
+            if (! is_writable($this->dir_to_archive)) {
                 event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive logs is not writable')));
 
                 return false;
@@ -74,7 +74,7 @@ abstract class AbstractHandler implements HandlerInterface
             return false;
         }
 
-        if (!mkdir($this->dir_to_archive, 0777, true)) {
+        if (! mkdir($this->dir_to_archive, 0777, true)) {
             event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive logs is not writable')));
 
             return false;
@@ -101,19 +101,19 @@ abstract class AbstractHandler implements HandlerInterface
             return false;
         }
 
-        if (!flock($fdSource, LOCK_EX)) {
+        if (! flock($fdSource, LOCK_EX)) {
             fclose($fdSource);
 
             return false;
         }
 
-        if (!copy($fileSource, $fileDestination)) {
+        if (! copy($fileSource, $fileDestination)) {
             fclose($fdSource);
 
             return false;
         }
 
-        if (!ftruncate($fdSource, 0)) {
+        if (! ftruncate($fdSource, 0)) {
             fclose($fdSource);
 
             unlink($fileDestination);
