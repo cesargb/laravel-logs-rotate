@@ -146,6 +146,10 @@ Run test with:
 composer test
 ```
 
+## Upgrading
+
+Please see [UPGRADING](UPGRADING.md) for details.
+
 ## Knowledge Issues
 
 * [#8](https://github.com/cesargb/laravel-logs-rotate/issues/8) While the file is being rotated, any record of another process may be lost.
