@@ -2,6 +2,8 @@
 
 namespace Cesargb\LaravelLog;
 
+use Cesargb\LaravelLog\Commands\RotateCommand;
+use Cesargb\LaravelLog\Commands\RotateFileCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,8 +22,8 @@ class RotateServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                Commands\Rotate::class,
-                Commands\RotateFile::class,
+                RotateCommand::class,
+                RotateFileCommand::class,
             ]);
 
             $this->registerSchedule();
