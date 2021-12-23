@@ -1,6 +1,6 @@
 <?php
 
-namespace Cesargb\File\Rotate\Test;
+namespace Cesargb\LaravelLog\Test;
 
 use Illuminate\Console\Scheduling\Schedule;
 
@@ -13,7 +13,7 @@ class ScheduleTest extends TestCase
 
     private function scheduleRegistered(): bool
     {
-        return ! is_null($this->schedule());
+        return !is_null($this->schedule());
     }
 
     private function schedule()

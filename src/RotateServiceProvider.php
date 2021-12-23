@@ -1,6 +1,6 @@
 <?php
 
-namespace Cesargb\File\Rotate;
+namespace Cesargb\LaravelLog;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
@@ -40,7 +40,7 @@ class RotateServiceProvider extends ServiceProvider
 
     private function registerSchedule()
     {
-        if (! config('rotate.schedule.enable', true)) {
+        if (!config('rotate.schedule.enable', true)) {
             return;
         }
 

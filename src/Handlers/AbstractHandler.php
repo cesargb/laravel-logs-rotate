@@ -1,10 +1,9 @@
 <?php
 
-namespace Cesargb\File\Rotate\Handlers;
+namespace Cesargb\LaravelLog\Handlers;
 
-use Cesargb\File\Rotate\Events\RotateHasFailed;
-use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
-use Cesargb\File\Rotate\Helpers\Log as LogHelper;
+use Cesargb\LaravelLog\Events\RotateHasFailed;
+use Cesargb\LaravelLog\Helpers\Log as LogHelper;
 use Exception;
 
 abstract class AbstractHandler implements HandlerInterface
@@ -42,21 +41,15 @@ abstract class AbstractHandler implements HandlerInterface
 
     private function validateFile(): bool
     {
-        if (! is_file($this->file)) {
-            event(new RotateIsNotNecessary($this->file, 'File '.$this->file.' does not exists'));
-
+        if (!is_file($this->file)) {
             return false;
         }
 
         if (filesize($this->file) == 0) {
-            event(new RotateIsNotNecessary($this->file, 'File '.$this->file.' is empty'));
-
             return false;
         }
 
-        if (! is_writable($this->file)) {
-            event(new RotateHasFailed($this->file, new Exception('File '.$this->file.' is not writable')));
-
+        if (!is_writable($this->file)) {
             return false;
         }
 
@@ -66,7 +59,7 @@ abstract class AbstractHandler implements HandlerInterface
     private function validateDirectory(): bool
     {
         if (is_dir($this->dir_to_archive)) {
-            if (! is_writable($this->dir_to_archive)) {
+            if (!is_writable($this->dir_to_archive)) {
                 event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive logs is not writable')));
 
                 return false;
@@ -81,7 +74,7 @@ abstract class AbstractHandler implements HandlerInterface
             return false;
         }
 
-        if (! mkdir($this->dir_to_archive, 0777, true)) {
+        if (!mkdir($this->dir_to_archive, 0777, true)) {
             event(new RotateHasFailed($this->file, new Exception('Directory '.$this->dir_to_archive.' to archive logs is not writable')));
 
             return false;
@@ -108,19 +101,19 @@ abstract class AbstractHandler implements HandlerInterface
             return false;
         }
 
-        if (! flock($fdSource, LOCK_EX)) {
+        if (!flock($fdSource, LOCK_EX)) {
             fclose($fdSource);
 
             return false;
         }
 
-        if (! copy($fileSource, $fileDestination)) {
+        if (!copy($fileSource, $fileDestination)) {
             fclose($fdSource);
 
             return false;
         }
 
-        if (! ftruncate($fdSource, 0)) {
+        if (!ftruncate($fdSource, 0)) {
             fclose($fdSource);
 
             unlink($fileDestination);

@@ -1,9 +1,9 @@
 <?php
 
-namespace Cesargb\File\Rotate\Test\Commands;
+namespace Cesargb\LaravelLog\Test\Commands;
 
-use Cesargb\File\Rotate\Events\RotateWasSuccessful;
-use Cesargb\File\Rotate\Test\TestCase;
+use Cesargb\LaravelLog\Events\RotateWasSuccessful;
+use Cesargb\LaravelLog\Test\TestCase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 
@@ -36,50 +36,50 @@ class RotateFileTest extends TestCase
         $this->assertFileExists($file2.'.1.gz');
     }
 
-    /** @test **/
-    public function itCanRotateFileArchive()
-    {
-        $file1 = $this->tmpDir.'/file1';
-        $file2 = $this->tmpDir.'/file2';
+    // /** @test **/
+    // public function itCanRotateFileArchive()
+    // {
+    //     $file1 = $this->tmpDir.'/file1';
+    //     $file2 = $this->tmpDir.'/file2';
 
-        $resultCode = Artisan::call('rotate:files', [
-            '--file' => [$file1, $file2],
-            '--dir' => $this->tmpDir.'/archive',
-        ]);
+    //     $resultCode = Artisan::call('rotate:files', [
+    //         '--file' => [$file1, $file2],
+    //         '--dir' => $this->tmpDir.'/archive',
+    //     ]);
 
-        Event::assertDispatched(RotateWasSuccessful::class, 2);
+    //     Event::assertDispatched(RotateWasSuccessful::class, 2);
 
-        $this->assertEquals($resultCode, 0);
-        $this->assertEquals(filesize($file1), 0);
-        $this->assertFileExists(dirname($file1).'/archive/'.basename($file1).'.1.gz');
-        $this->assertEquals(filesize($file2), 0);
-        $this->assertFileExists(dirname($file2).'/archive/'.basename($file2).'.1.gz');
-    }
+    //     $this->assertEquals($resultCode, 0);
+    //     $this->assertEquals(filesize($file1), 0);
+    //     $this->assertFileExists(dirname($file1).'/archive/'.basename($file1).'.1.gz');
+    //     $this->assertEquals(filesize($file2), 0);
+    //     $this->assertFileExists(dirname($file2).'/archive/'.basename($file2).'.1.gz');
+    // }
 
-    /** @test **/
-    public function itCanRotateFileMax()
-    {
-        $file = $this->tmpDir.'/file1';
+    // /** @test **/
+    // public function itCanRotateFileMax()
+    // {
+    //     $file = $this->tmpDir.'/file1';
 
-        for ($n = 0; $n < 5; $n++) {
-            file_put_contents($file, 'test');
+    //     for ($n = 0; $n < 5; ++$n) {
+    //         file_put_contents($file, 'test');
 
-            $resultCode = Artisan::call('rotate:files', [
-                '--file' => [$file],
-                '--max-files' => 3,
-            ]);
+    //         $resultCode = Artisan::call('rotate:files', [
+    //             '--file' => [$file],
+    //             '--max-files' => 3,
+    //         ]);
 
-            $this->assertEquals($resultCode, 0);
-        }
+    //         $this->assertEquals($resultCode, 0);
+    //     }
 
-        Event::assertDispatched(RotateWasSuccessful::class, 5);
+    //     Event::assertDispatched(RotateWasSuccessful::class, 5);
 
-        $this->assertEquals(filesize($file), 0);
+    //     $this->assertEquals(filesize($file), 0);
 
-        for ($n = 1; $n < 4; $n++) {
-            $this->assertFileExists($file.'.'.$n.'.gz');
-        }
+    //     for ($n = 1; $n < 4; ++$n) {
+    //         $this->assertFileExists($file.'.'.$n.'.gz');
+    //     }
 
-        $this->assertFileNotExists($file.basename($file).'.4.gz');
-    }
+    //     $this->assertFileNotExists($file.basename($file).'.4.gz');
+    // }
 }

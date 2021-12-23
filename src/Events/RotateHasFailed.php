@@ -1,18 +1,18 @@
 <?php
 
-namespace Cesargb\File\Rotate\Events;
+namespace Cesargb\LaravelLog\Events;
 
 use Exception;
 
 class RotateHasFailed
 {
-    public $fileSource;
+    public string $filename;
 
-    public $exception;
+    public Exception $exception;
 
-    public function __construct($fileSource, Exception $exception)
+    public function __construct(string $filename, Exception $exception)
     {
-        $this->fileSource = $fileSource;
+        $this->filename = $filename;
 
         $this->exception = $exception;
     }

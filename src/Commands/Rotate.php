@@ -1,9 +1,9 @@
 <?php
 
-namespace Cesargb\File\Rotate\Commands;
+namespace Cesargb\LaravelLog\Commands;
 
-use Cesargb\File\Rotate\Handlers\RotativeHandler;
-use Cesargb\File\Rotate\Helpers\Log as LogHelper;
+use Cesargb\LaravelLog\Helpers\Log as LogHelper;
+use Cesargb\LaravelLog\Rotate as LaravelLogRotate;
 use Illuminate\Console\Command;
 
 class Rotate extends Command
@@ -37,19 +37,23 @@ class Rotate extends Command
         }
     }
 
-    protected function rotateFile($file)
+    protected function rotateFile(string $filename)
     {
-        $rotate = new RotativeHandler(
-            $file,
-            config('rotate.log_max_files', 5),
-            config('rotate.log_compress_files', true),
-            config('rotate.archive_dir')
-        );
+        // $rotate = new RotativeHandler(
+        //     $file,
+        //     config('rotate.log_max_files', 5),
+        //     config('rotate.log_compress_files', true),
+        //     config('rotate.archive_dir')
+        // );
 
-        if ($rotate->run()) {
-            $this->line("\t".'<info>Rotated</>');
-        } else {
-            $this->line("\t".'<comment>Not rotated</>');
-        }
+        // if ($rotate->run()) {
+        //     $this->line("\t".'<info>Rotated</>');
+        // } else {
+        //     $this->line("\t".'<comment>Not rotated</>');
+        // }
+
+        $rotation = new LaravelLogRotate();
+
+        $rotation->file($filename);
     }
 }

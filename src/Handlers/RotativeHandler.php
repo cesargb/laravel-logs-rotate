@@ -1,9 +1,9 @@
 <?php
 
-namespace Cesargb\File\Rotate\Handlers;
+namespace Cesargb\LaravelLog\Handlers;
 
-use Cesargb\File\Rotate\Events\RotateHasFailed;
-use Cesargb\File\Rotate\Events\RotateWasSuccessful;
+use Cesargb\LaravelLog\Events\RotateHasFailed;
+use Cesargb\LaravelLog\Events\RotateWasSuccessful;
 
 class RotativeHandler extends AbstractHandler
 {
@@ -20,7 +20,7 @@ class RotativeHandler extends AbstractHandler
 
     public function run()
     {
-        if (! $this->validate()) {
+        if (!$this->validate()) {
             return false;
         }
 
@@ -53,7 +53,7 @@ class RotativeHandler extends AbstractHandler
             if ($fd_tmp !== false) {
                 $fd_compress = gzopen($this->file_rotated, 'w');
 
-                while (! feof($fd_tmp)) {
+                while (!feof($fd_tmp)) {
                     gzwrite($fd_compress, fread($fd_tmp, 1024 * 512));
                 }
 
@@ -75,7 +75,7 @@ class RotativeHandler extends AbstractHandler
 
         $curFiles = glob($patternGlob);
 
-        for ($n = count($curFiles); $n > 0; $n--) {
+        for ($n = count($curFiles); $n > 0; --$n) {
             $file_to_move = str_replace('*', $n, $patternGlob);
 
             if (file_exists($file_to_move)) {
@@ -94,7 +94,7 @@ class RotativeHandler extends AbstractHandler
     {
         $patternGlob = $fileInfo['dirname'].'/'.$fileInfo['filename'];
 
-        if (! empty($fileInfo['extension'])) {
+        if (!empty($fileInfo['extension'])) {
             $patternGlob .= '.'.$fileInfo['extension'];
         }
 

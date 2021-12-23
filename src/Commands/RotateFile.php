@@ -1,8 +1,8 @@
 <?php
 
-namespace Cesargb\File\Rotate\Commands;
+namespace Cesargb\LaravelLog\Commands;
 
-use Cesargb\File\Rotate\Handlers\RotativeHandler;
+use Cesargb\LaravelLog\Rotate;
 use Illuminate\Console\Command;
 
 class RotateFile extends Command
@@ -17,21 +17,21 @@ class RotateFile extends Command
 
     public function handle()
     {
-        foreach ($this->option('file') as $file) {
-            $this->line('Rotate file '.$file.': ');
+        foreach ($this->option('file') as $filename) {
+            $this->line('Rotate file '.basename($filename).': ');
 
-            $rotate = new RotativeHandler(
-                $file,
-                (int) $this->option('max-files'),
-                (bool) $this->option('compress'),
-                $this->option('dir')
-            );
+            $rotate = new Rotate();
 
-            if ($rotate->run()) {
-                $this->line("\t".'<info>Rotated</>');
-            } else {
-                $this->line("\t".'<comment>Not rotated</>');
-            }
+            $rotate->file($filename, [
+                'files' => config('rotate.log_max_files', 366),
+                'compress' => config('rotate.log_compress_files', true),
+                // 'then' => function () {
+                //     $this->line('<info>ok</>');
+                // },
+                // 'catch' => function ($error) {
+                //     $this->error('<comment>failed: '.$error->getMessage().'</>');
+                // },
+            ]);
         }
     }
 }

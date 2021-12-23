@@ -1,10 +1,10 @@
 <?php
 
-namespace Cesargb\File\Rotate\Test;
+namespace Cesargb\LaravelLog\Test;
 
-use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
-use Cesargb\File\Rotate\Events\RotateWasSuccessful;
-use Cesargb\File\Rotate\Helpers\Log as LogHelper;
+use Cesargb\LaravelLog\Events\RotateHasFailed;
+use Cesargb\LaravelLog\Events\RotateWasSuccessful;
+use Cesargb\LaravelLog\Helpers\Log as LogHelper;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 use Monolog\Handler\StreamHandler;
@@ -15,10 +15,11 @@ class RotateTest extends TestCase
     {
         $resultCode = Artisan::call('rotate:logs');
 
-        Event::assertDispatched(RotateIsNotNecessary::class, 1);
+        Event::assertDispatched(RotateWasSuccessful::class, 0);
+        Event::assertDispatched(RotateHasFailed::class, 0);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.1.gz');
+        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
     public function testNoRotateIfFileLogsIsEmpty()
@@ -27,54 +28,11 @@ class RotateTest extends TestCase
 
         $resultCode = Artisan::call('rotate:logs');
 
-        Event::assertDispatched(RotateIsNotNecessary::class, 1);
+        Event::assertDispatched(RotateWasSuccessful::class, 0);
+        Event::assertDispatched(RotateHasFailed::class, 0);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.1.gz');
-    }
-
-    public function testItCanRotateLogsInArchiveDir()
-    {
-        $archive_folder = app()->storagePath().'/logs/archive';
-
-        $this->app['config']->set('rotate.archive_dir', $archive_folder);
-
-        $this->writeLog();
-
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
-
-        $resultCode = Artisan::call('rotate:logs');
-
-        Event::assertDispatched(RotateWasSuccessful::class, 1);
-
-        $this->assertEquals($resultCode, 0);
-        $this->assertFileExists($archive_folder.'/laravel.log.1.gz');
-
-        unlink($archive_folder.'/laravel.log.1.gz');
-
-        rmdir($archive_folder);
-    }
-
-    public function testItCanRotateLogsInArchiveDirRelative()
-    {
-        $archive_folder = 'archives';
-
-        $this->app['config']->set('rotate.archive_dir', $archive_folder);
-
-        $this->writeLog();
-
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
-
-        $resultCode = Artisan::call('rotate:logs');
-
-        Event::assertDispatched(RotateWasSuccessful::class, 1);
-
-        $this->assertEquals($resultCode, 0);
-        $this->assertFileExists(app()->storagePath().'/logs/'.$archive_folder.'/laravel.log.1.gz');
-
-        unlink(app()->storagePath().'/logs/'.$archive_folder.'/laravel.log.1.gz');
-
-        rmdir(app()->storagePath().'/logs/'.$archive_folder);
+        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
     public function testItNotRotateLogsDaily()
@@ -96,7 +54,7 @@ class RotateTest extends TestCase
         $this->assertEquals($resultCode, 0);
 
         foreach ($files as $file) {
-            $this->assertFileNotExists($file.'.1.gz');
+            $this->assertFileDoesNotExist($file.'.1.gz');
         }
     }
 
@@ -141,7 +99,7 @@ class RotateTest extends TestCase
         $resultCode = Artisan::call('rotate:logs');
 
         Event::assertDispatched(RotateWasSuccessful::class, 0);
-        Event::assertDispatched(RotateIsNotNecessary::class, 1);
+        Event::assertDispatched(RotateHasFailed::class, 0);
 
         $this->assertEquals($resultCode, 0);
     }
