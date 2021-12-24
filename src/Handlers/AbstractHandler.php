@@ -1,10 +1,9 @@
 <?php
 
-namespace Cesargb\File\Rotate\Handlers;
+namespace Cesargb\LaravelLog\Handlers;
 
-use Cesargb\File\Rotate\Events\RotateHasFailed;
-use Cesargb\File\Rotate\Events\RotateIsNotNecessary;
-use Cesargb\File\Rotate\Helpers\Log as LogHelper;
+use Cesargb\LaravelLog\Events\RotateHasFailed;
+use Cesargb\LaravelLog\Helpers\Log as LogHelper;
 use Exception;
 
 abstract class AbstractHandler implements HandlerInterface
@@ -43,20 +42,14 @@ abstract class AbstractHandler implements HandlerInterface
     private function validateFile(): bool
     {
         if (! is_file($this->file)) {
-            event(new RotateIsNotNecessary($this->file, 'File '.$this->file.' does not exists'));
-
             return false;
         }
 
         if (filesize($this->file) == 0) {
-            event(new RotateIsNotNecessary($this->file, 'File '.$this->file.' is empty'));
-
             return false;
         }
 
         if (! is_writable($this->file)) {
-            event(new RotateHasFailed($this->file, new Exception('File '.$this->file.' is not writable')));
-
             return false;
         }
 

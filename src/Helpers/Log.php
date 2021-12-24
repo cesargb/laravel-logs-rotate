@@ -1,6 +1,6 @@
 <?php
 
-namespace Cesargb\File\Rotate\Helpers;
+namespace Cesargb\LaravelLog\Helpers;
 
 use Illuminate\Support\Facades\Log as LogLaravel;
 use Monolog\Handler\RotatingFileHandler;

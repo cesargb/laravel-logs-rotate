@@ -1,17 +1,17 @@
 <?php
 
-namespace Cesargb\File\Rotate\Events;
+namespace Cesargb\LaravelLog\Events;
 
 class RotateWasSuccessful
 {
-    public $fileSource;
+    public string $filename;
 
-    public $fileRotated;
+    public string $filenameTarget;
 
-    public function __construct($fileSource, $fileRotated)
+    public function __construct(string $filename, string $filenameTarget)
     {
-        $this->fileSource = $fileSource;
+        $this->filename = $filename;
 
-        $this->fileRotated = $fileRotated;
+        $this->filenameTarget = $filenameTarget;
     }
 }

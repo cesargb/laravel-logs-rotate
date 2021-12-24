@@ -13,17 +13,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Archive Dir
-    |--------------------------------------------------------------------------
-    |
-    | This value determines the folder where the files are saved.
-    | Leave null to archive in the same folder of your logs.
-    |
-    */
-    'archive_dir'   => null,
-
-    /*
-    |--------------------------------------------------------------------------
     | Schedule Rotate
     |--------------------------------------------------------------------------
     |
@@ -33,8 +22,8 @@ return [
     |
     */
     'schedule' => [
-        'enable'    => true,
-        'cron'      => '0 0 * * *',
+        'enable' => true,
+        'cron' => '0 0 * * *',
     ],
 
     /*
@@ -55,10 +44,10 @@ return [
     | Array the other foreing files
     |
     | Example:
-    |   'foreing_files' => [
+    |   'foreign_files' => [
             storage_path('/logs/worker.log')
     |   ]
     |
     */
-    'foreing_files' => [],
+    'foreign_files' => [],
 ];

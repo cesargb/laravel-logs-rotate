@@ -1,9 +1,9 @@
+# Rotate Laravel logs files and compress
+
 ![tests](https://github.com/cesargb/laravel-logs-rotate/workflows/tests/badge.svg)
 [![StyleCI](https://styleci.io/repos/119604039/shield?branch=master)](https://styleci.io/repos/119604039)
 [![Latest Stable Version](https://img.shields.io/packagist/v/cesargb/laravel-logs-rotate.svg)](https://packagist.org/packages/cesargb/laravel-logs-rotate)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cesargb/laravel-logs-rotate/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cesargb/laravel-logs-rotate/?branch=master)
-
-# Rotate Laravel logs files and compress
 
 This package allows you to rotate the Laravel record file with compression. This method is useful if you use logger channel `single` (StreamHandler)
 
@@ -30,6 +30,7 @@ You can publish config file with:
 ```bash
 php artisan vendor:publish --provider="Cesargb\File\Rotate\RotateServiceProvider" --tag=config
 ```
+
 This is the contents of the published config/rotate.php config file:
 
 ```php
@@ -45,17 +46,6 @@ return [
     | If you prefer not compress file, set this value at false.
     */
     'log_compress_files' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Archive Dir
-    |--------------------------------------------------------------------------
-    |
-    | This value determines the folder where the files are saved.
-    | Leave null to archive in the same folder of your logs.
-    |
-    */
-    'archive_dir'   => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -90,12 +80,12 @@ return [
     | Array the other foreing files
     |
     | Example:
-    |   'foreing_files' => [
+    |   'foreign_files' => [
             storage_path('/logs/worker.log')
     |   ]
     |
     */
-    'foreing_files' => []
+    'foreign_files' => []
 ];
 ```
 
@@ -133,17 +123,6 @@ It has two public properties:
 * fileSource: the full path of file to rotate
 * fileRotated: the full path of file rotated
 
-### RotateIsNotNecessary
-
-`Cesargb\File\Rotate\Events\RotateIsNotNecessary`
-
-If file log does not exist or is empty this event will be fired.
-
-It has two public properties:
-
-* fileSource: the full path of file to rotate
-* message: Descriptive message of the reason
-
 ### RotateHasFailed
 
 `Cesargb\File\Rotate\Handlers\RotativeHandler`
@@ -166,6 +145,10 @@ Run test with:
 ```bash
 composer test
 ```
+
+## Upgrading
+
+Please see [UPGRADING](UPGRADING.md) for details.
 
 ## Knowledge Issues
 

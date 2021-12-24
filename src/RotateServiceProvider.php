@@ -1,7 +1,9 @@
 <?php
 
-namespace Cesargb\File\Rotate;
+namespace Cesargb\LaravelLog;
 
+use Cesargb\LaravelLog\Commands\RotateCommand;
+use Cesargb\LaravelLog\Commands\RotateFileCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,14 +16,14 @@ class RotateServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__.'/../config/rotate.php' => config_path('rotate.php'),
-        ], 'config');
-
         if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/rotate.php' => $this->app->configPath('rotate.php'),
+            ], 'config');
+
             $this->commands([
-                Commands\Rotate::class,
-                Commands\RotateFile::class,
+                RotateCommand::class,
+                RotateFileCommand::class,
             ]);
 
             $this->registerSchedule();

@@ -1,9 +1,9 @@
 <?php
 
-namespace Cesargb\File\Rotate\Handlers;
+namespace Cesargb\LaravelLog\Handlers;
 
-use Cesargb\File\Rotate\Events\RotateHasFailed;
-use Cesargb\File\Rotate\Events\RotateWasSuccessful;
+use Cesargb\LaravelLog\Events\RotateHasFailed;
+use Cesargb\LaravelLog\Events\RotateWasSuccessful;
 
 class RotativeHandler extends AbstractHandler
 {

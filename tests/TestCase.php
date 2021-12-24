@@ -1,9 +1,9 @@
 <?php
 
-namespace Cesargb\File\Rotate\Test;
+namespace Cesargb\LaravelLog\Test;
 
-use Cesargb\File\Rotate\Helpers\Log as LogHelper;
-use Cesargb\File\Rotate\RotateServiceProvider;
+use Cesargb\LaravelLog\Helpers\Log as LogHelper;
+use Cesargb\LaravelLog\RotateServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use Orchestra\Testbench\TestCase as Orchestra;

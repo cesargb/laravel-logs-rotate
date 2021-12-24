@@ -1,9 +1,9 @@
 <?php
 
-namespace Cesargb\File\Rotate\Test\Handlers;
+namespace Cesargb\LaravelLog\Test\Handlers;
 
-use Cesargb\File\Rotate\Events\RotateWasSuccessful;
-use Cesargb\File\Rotate\Test\TestCase;
+use Cesargb\LaravelLog\Events\RotateWasSuccessful;
+use Cesargb\LaravelLog\Test\TestCase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 
@@ -71,6 +71,6 @@ class RotativeHandlerTest extends TestCase
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.3.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.4.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.5.gz');
-        $this->assertFileNotExists(app()->storagePath().'/logs/laravel.log.6.gz');
+        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.6.gz');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cesargb\File\Rotate\Test;
+namespace Cesargb\LaravelLog\Test;
 
 use Illuminate\Console\Scheduling\Schedule;
 

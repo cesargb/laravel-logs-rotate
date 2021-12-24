@@ -1,6 +1,6 @@
 <?php
 
-namespace Cesargb\File\Rotate\Handlers;
+namespace Cesargb\LaravelLog\Handlers;
 
 interface HandlerInterface
 {
