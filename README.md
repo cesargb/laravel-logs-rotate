@@ -114,24 +114,24 @@ Every time a file is rotated one of these events occurs:
 
 ### RotateWasSuccessful
 
-`Cesargb\File\Rotate\Events\RotateWasSuccessful`
+`Cesargb\LaravelLog\Events\RotateWasSuccessful`
 
 This event will be fired when rotated was successful.
 
 It has two public properties:
 
-* fileSource: the full path of file to rotate
-* fileRotated: the full path of file rotated
+* filename: the full path of file to rotate
+* filenameTarget: the full path of file rotated
 
 ### RotateHasFailed
 
-`Cesargb\File\Rotate\Handlers\RotativeHandler`
+`Cesargb\LaravelLog\Events\RotativeHandler`
 
 This event will be fired when an error occurs while rotated
 
 It has two public properties:
 
-* fileSource: the full path of file to rotate
+* filename: the full path of file to rotate
 * exception: an object that extends PHP's Exception class.
 
 ## About
@@ -149,10 +149,6 @@ composer test
 ## Upgrading
 
 Please see [UPGRADING](UPGRADING.md) for details.
-
-## Knowledge Issues
-
-* [#8](https://github.com/cesargb/laravel-logs-rotate/issues/8) While the file is being rotated, any record of another process may be lost.
 
 ## Contributing
 

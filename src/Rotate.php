@@ -4,6 +4,7 @@ namespace Cesargb\LaravelLog;
 
 use Cesargb\LaravelLog\Events\RotateHasFailed;
 use Cesargb\LaravelLog\Events\RotateWasSuccessful;
+use Cesargb\LaravelLog\Helpers\Log;
 use Cesargb\Log\Rotation;
 
 class Rotate
@@ -17,7 +18,13 @@ class Rotate
 
     public function file(string $filename, array $options = []): bool
     {
-        return $this->buildRotateDefault($options)->rotate($filename);
+        $result = $this->buildRotateDefault($options)->rotate($filename);
+
+        if ($result) {
+            Log::closeHandlers();
+        }
+
+        return $result;
     }
 
     private function buildRotateDefault(array $options = []): Rotation

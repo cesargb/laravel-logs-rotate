@@ -26,7 +26,7 @@ abstract class TestCase extends Orchestra
 
         $this->cleanLogs();
 
-        if (! file_exists($this->tmpDir)) {
+        if (!file_exists($this->tmpDir)) {
             mkdir($this->tmpDir);
         }
     }
@@ -49,7 +49,7 @@ abstract class TestCase extends Orchestra
             $filesToRemove = glob(dirname($fileLog).'/*');
 
             foreach ($filesToRemove as $f) {
-                if (is_file($f) && ! is_dir($f)) {
+                if (is_file($f) && !is_dir($f)) {
                     unlink($f);
                 }
             }
@@ -58,7 +58,7 @@ abstract class TestCase extends Orchestra
         $filesToRemove = glob($this->tmpDir.'/*');
 
         foreach ($filesToRemove as $f) {
-            if (is_file($f) && ! is_dir($f)) {
+            if (is_file($f) && !is_dir($f)) {
                 unlink($f);
             }
         }
@@ -66,7 +66,7 @@ abstract class TestCase extends Orchestra
         $filesToRemove = glob($this->tmpDir.'/archive/*');
 
         foreach ($filesToRemove as $f) {
-            if (is_file($f) && ! is_dir($f)) {
+            if (is_file($f) && !is_dir($f)) {
                 unlink($f);
             }
         }

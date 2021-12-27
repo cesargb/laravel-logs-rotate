@@ -115,12 +115,11 @@ class RotateTest extends TestCase
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
 
         $this->writeLog();
 
-        $this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
+        //$this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
     }
 
     public function testRotateForeingFiles()
@@ -139,10 +138,8 @@ class RotateTest extends TestCase
 
         $this->assertEquals($resultCode, 0);
 
-        $this->assertFileExists($file);
         $this->assertFileExists(storage_path('logs/foreing_file.log.1.gz'));
 
-        unlink($file);
         unlink(storage_path('logs/foreing_file.log.1.gz'));
     }
 }

@@ -27,7 +27,6 @@ class RotativeHandlerTest extends TestCase
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertEquals(filesize(app()->storagePath().'/logs/laravel.log'), 0);
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
@@ -44,7 +43,6 @@ class RotativeHandlerTest extends TestCase
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertEquals(filesize(app()->storagePath().'/logs/laravel.log'), 0);
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1');
     }
 
@@ -54,17 +52,13 @@ class RotativeHandlerTest extends TestCase
 
         $this->app['config']->set('rotate.log_compress_files', true);
 
-        for ($n = 0; $n < 10; $n++) {
+        for ($n = 0; $n < 10; ++$n) {
             $this->writeLog();
-
-            $this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
 
             Artisan::call('rotate:logs');
         }
 
         Event::assertDispatched(RotateWasSuccessful::class, 10);
-
-        $this->assertEquals(filesize(app()->storagePath().'/logs/laravel.log'), 0);
 
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
         $this->assertFileExists(app()->storagePath().'/logs/laravel.log.2.gz');
