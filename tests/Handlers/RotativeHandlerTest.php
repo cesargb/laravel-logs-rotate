@@ -52,7 +52,7 @@ class RotativeHandlerTest extends TestCase
 
         $this->app['config']->set('rotate.log_compress_files', true);
 
-        for ($n = 0; $n < 10; ++$n) {
+        for ($n = 0; $n < 10; $n++) {
             $this->writeLog();
 
             Artisan::call('rotate:logs');
