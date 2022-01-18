@@ -49,5 +49,7 @@
                 "Cesargb\\LaravelLog\\RotateServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
