@@ -28,7 +28,7 @@ If you need to change the frequency or another function, you can modify the conf
 You can publish config file with:
 
 ```bash
-php artisan vendor:publish --provider="Cesargb\File\Rotate\RotateServiceProvider" --tag=config
+php artisan vendor:publish --provider="Cesargb\LaravelLog\RotateServiceProvider" --tag=config
 ```
 
 This is the contents of the published config/rotate.php config file:
