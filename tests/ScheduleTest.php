@@ -6,7 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 
 class ScheduleTest extends TestCase
 {
-    public function testHasSchedule()
+    public function test_has_schedule()
     {
         $this->assertTrue($this->scheduleRegistered());
     }

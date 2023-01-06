@@ -40,7 +40,7 @@ class Rotate
                     event(new RotateHasFailed('', $error));
                 },
             ],
-           $options
+            $options
         ));
     }
 }

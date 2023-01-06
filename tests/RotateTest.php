@@ -11,7 +11,7 @@ use Monolog\Handler\StreamHandler;
 
 class RotateTest extends TestCase
 {
-    public function testNoRotateIfFileLogsNotExits()
+    public function test_no_rotate_if_file_logs_not_exits()
     {
         $resultCode = Artisan::call('rotate:logs');
 
@@ -22,7 +22,7 @@ class RotateTest extends TestCase
         $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
-    public function testNoRotateIfFileLogsIsEmpty()
+    public function test_no_rotate_if_file_logs_is_empty()
     {
         touch(app()->storagePath().'/logs/laravel.log');
 
@@ -35,7 +35,7 @@ class RotateTest extends TestCase
         $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
-    public function testItNotRotateLogsDaily()
+    public function test_it_not_rotate_logs_daily()
     {
         $this->app['config']->set('logging.default', 'daily');
 
@@ -58,7 +58,7 @@ class RotateTest extends TestCase
         }
     }
 
-    public function testItCanRotateLogsCustomStreamFile()
+    public function test_it_can_rotate_logs_custom_stream_file()
     {
         $this->app['config']->set('logging.channels.custom', [
             'driver' => 'monolog',
@@ -84,7 +84,7 @@ class RotateTest extends TestCase
         unlink(app()->storagePath().'/logs/custom.log.1.gz');
     }
 
-    public function testItNotRotateLogsCustomStreamStd()
+    public function test_it_not_rotate_logs_custom_stream_std()
     {
         $this->app['config']->set('logging.channels.custom', [
             'driver' => 'monolog',
@@ -104,7 +104,7 @@ class RotateTest extends TestCase
         $this->assertEquals($resultCode, 0);
     }
 
-    public function testItCanWriteLogAfterRotate()
+    public function test_it_can_write_log_after_rotate()
     {
         $this->writeLog();
 
@@ -122,7 +122,7 @@ class RotateTest extends TestCase
         //$this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
     }
 
-    public function testRotateForeingFiles()
+    public function test_rotate_foreing_files()
     {
         $file = storage_path('logs/foreing_file.log');
 

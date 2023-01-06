@@ -18,7 +18,7 @@ class RotateFileTest extends TestCase
     }
 
     /** @test **/
-    public function itCanRotateFile()
+    public function it_can_rotate_file()
     {
         $file1 = $this->tmpDir.'/file1';
         $file2 = $this->tmpDir.'/file2';
