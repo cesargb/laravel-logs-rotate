@@ -2,6 +2,7 @@
 
 ![tests](https://github.com/cesargb/laravel-logs-rotate/workflows/tests/badge.svg)
 [![style](https://github.com/cesargb/laravel-logs-rotate/actions/workflows/style-fix.yml/badge.svg)](https://github.com/cesargb/laravel-logs-rotate/actions/workflows/style-fix.yml)
+[![phpstan](https://github.com/cesargb/laravel-logs-rotate/actions/workflows/phpstan.yml/badge.svg)](https://github.com/cesargb/laravel-logs-rotate/actions/workflows/phpstan.yml)
 [![Latest Stable Version](https://img.shields.io/packagist/v/cesargb/laravel-logs-rotate.svg)](https://packagist.org/packages/cesargb/laravel-logs-rotate)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cesargb/laravel-logs-rotate/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cesargb/laravel-logs-rotate/?branch=master)
 
