@@ -29,7 +29,8 @@
     "require-dev": {
         "orchestra/testbench": "^7.0",
         "phpunit/phpunit": "^9.5",
-        "friendsofphp/php-cs-fixer": "^3.13"
+        "friendsofphp/php-cs-fixer": "^3.13",
+        "nunomaduro/larastan": "^2.3"
     },
     "autoload": {
         "psr-4": {
