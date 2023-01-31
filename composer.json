@@ -23,7 +23,7 @@
         "illuminate/console": "^9.0|^10.0",
         "illuminate/log": "^9.0|^10.0",
         "illuminate/support": "^9.0|^10.0",
-        "monolog/monolog": "^2.0",
+        "monolog/monolog": "^2.0|^3.0",
         "cesargb/php-log-rotation": "^2.7"
     },
     "require-dev": {
