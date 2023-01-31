@@ -19,15 +19,15 @@
     "license": "MIT",
     "require": {
         "php" : "^8.0",
-        "illuminate/config": "^9.0",
-        "illuminate/console": "^9.0",
-        "illuminate/log": "^9.0",
-        "illuminate/support": "^9.0",
+        "illuminate/config": "^9.0|^10.0",
+        "illuminate/console": "^9.0|^10.0",
+        "illuminate/log": "^9.0|^10.0",
+        "illuminate/support": "^9.0|^10.0",
         "monolog/monolog": "^2.0",
         "cesargb/php-log-rotation": "^2.7"
     },
     "require-dev": {
-        "orchestra/testbench": "^7.0",
+        "orchestra/testbench": "^7.0|^8.0",
         "phpunit/phpunit": "^9.5",
         "friendsofphp/php-cs-fixer": "^3.13",
         "nunomaduro/larastan": "^2.3"
