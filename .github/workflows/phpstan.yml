@@ -17,20 +17,22 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 8.1
+        php-version: 8.2
 
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-php-8.2-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-php-
+          ${{ runner.os }}-php-8.2-
+
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: |
         composer install
         composer dump
+
     - name: Run analyse phpstan
       run: vendor/bin/phpstan analyse --error-format github
