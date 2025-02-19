@@ -9,27 +9,27 @@
     ],
     "homepage": "https://github.com/cesargb/laravel-logs-rotate",
     "authors": [
-	{
-        "name": "Cesar Garcia",
-        "email": "cesargb@gmail.com",
-        "homepage": "https://github.com/cesargb",
-        "role": "Developer"
-	}
+        {
+            "name": "Cesar Garcia",
+            "email": "cesargb@gmail.com",
+            "homepage": "https://github.com/cesargb",
+            "role": "Developer"
+        }
     ],
     "license": "MIT",
     "require": {
-        "php" : "^8.0",
-        "illuminate/config": "^10.0|^11.0",
-        "illuminate/console": "^10.0|^11.0",
-        "illuminate/log": "^10.0|^11.0",
-        "illuminate/support": "^10.0|^11.0",
+        "php": "^8.0",
+        "illuminate/config": "^10.0|^11.0|^12.0",
+        "illuminate/console": "^10.0|^11.0|^12.0",
+        "illuminate/log": "^10.0|^11.0|^12.0",
+        "illuminate/support": "^10.0|^11.0|^12.0",
         "monolog/monolog": "^2.0|^3.0|^11.0",
         "cesargb/php-log-rotation": "^2.7"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^10.5|^11.5.3",
         "friendsofphp/php-cs-fixer": "^3.13",
-        "orchestra/testbench": "^8.0|^9.0",
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
         "larastan/larastan": "^2.0"
     },
     "autoload": {
