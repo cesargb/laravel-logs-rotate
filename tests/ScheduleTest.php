@@ -16,6 +16,6 @@ class ScheduleTest extends TestCase
     private function scheduleEventRotateLogs(): ?Event
     {
         return collect(app(Schedule::class)->events())
-            ->first(fn(Event $s) => Str::endsWith($s->command, ' rotate:logs'));
+            ->first(fn (Event $s) => Str::endsWith($s->command, ' rotate:logs'));
     }
 }
