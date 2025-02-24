@@ -30,9 +30,7 @@ class Log
     {
         foreach (self::getHandlers() as $handler) {
             if ($handler instanceof StreamHandler && ! $handler instanceof RotatingFileHandler) {
-                if (method_exists($handler, 'close')) {
-                    $handler->close();
-                }
+                $handler->close();
             }
         }
     }
