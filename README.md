@@ -75,6 +75,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Truncate Log file
+    |--------------------------------------------------------------------------
+    |
+    | This option defines if the log file must be truncated after rotated.
+    | If you prefer not truncate file, set this value at false.
+    */
+    'truncate' => env('LOG_TRUNCATE', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Other files to rotated
     |--------------------------------------------------------------------------
     |

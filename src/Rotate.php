@@ -36,6 +36,7 @@ class Rotate
                 'then' => function ($filenameRotated, $filename) {
                     event(new RotateWasSuccessful($filename, $filenameRotated));
                 },
+                'truncate' => config('rotate.truncate', true),
                 'catch' => function ($error) {
                     event(new RotateHasFailed('', $error));
                 },
