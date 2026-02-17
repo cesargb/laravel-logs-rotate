@@ -41,6 +41,7 @@ abstract class TestCase extends Orchestra
     protected function writeLog()
     {
         Log::info('test');
+        clearstatcache();
     }
 
     protected function cleanLogs()
