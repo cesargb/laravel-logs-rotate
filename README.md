@@ -71,7 +71,7 @@ return [
     | This value determine the max number of files rotated in the archive folder.
     |
     */
-    'log_max_files' => env('LOG_MAX_FILES', 5),
+    'log_max_files' => env('LOG_MAX_FILES', 30),
 
     /*
     |--------------------------------------------------------------------------
