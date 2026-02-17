@@ -20,7 +20,7 @@ class RotateFileCommand extends Command
         foreach ($this->option('file') as $filename) {
             $this->line('Rotate file '.basename($filename).': ');
 
-            $rotate = new Rotate();
+            $rotate = new Rotate;
 
             $rotate->file($filename, [
                 'files' => config('rotate.log_max_files', 366),
