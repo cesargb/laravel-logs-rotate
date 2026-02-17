@@ -174,4 +174,59 @@ class RotateTest extends TestCase
 
         unlink(storage_path('logs/foreing_file.log.1.gz'));
     }
+
+    public function test_no_rotate_if_file_is_smaller_than_min_size()
+    {
+        $this->app['config']->set('rotate.log_min_size', 1000);
+
+        $logPath = app()->storagePath().'/logs/laravel.log';
+        file_put_contents($logPath, 'Small log content');
+
+        $this->assertFileExists($logPath);
+        $this->assertLessThan(1000, filesize($logPath));
+
+        $resultCode = Artisan::call('rotate:logs');
+
+        Event::assertDispatched(RotateWasSuccessful::class, 0);
+        Event::assertDispatched(RotateHasFailed::class, 0);
+
+        $this->assertEquals($resultCode, 0);
+        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.1.gz');
+    }
+
+    public function test_rotate_if_file_is_larger_than_or_equal_to_min_size()
+    {
+        $this->app['config']->set('rotate.log_min_size', 100);
+
+        $logPath = app()->storagePath().'/logs/laravel.log';
+        $largeContent = str_repeat('This is a log entry with some content. ', 10);
+        file_put_contents($logPath, $largeContent);
+
+        $this->assertFileExists($logPath);
+        $this->assertGreaterThanOrEqual(100, filesize($logPath));
+
+        $resultCode = Artisan::call('rotate:logs');
+
+        Event::assertDispatched(RotateWasSuccessful::class, 1);
+
+        $this->assertEquals($resultCode, 0);
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
+    }
+
+    public function test_rotate_when_min_size_is_zero()
+    {
+        $this->app['config']->set('rotate.log_min_size', 0);
+
+        $logPath = app()->storagePath().'/logs/laravel.log';
+        file_put_contents($logPath, 'Tiny');
+
+        $this->assertFileExists($logPath);
+
+        $resultCode = Artisan::call('rotate:logs');
+
+        Event::assertDispatched(RotateWasSuccessful::class, 1);
+
+        $this->assertEquals($resultCode, 0);
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
+    }
 }
