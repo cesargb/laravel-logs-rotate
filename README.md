@@ -71,6 +71,18 @@ return [
     */
     'log_max_files' => env('LOG_MAX_FILES', 30),
 
+   /*
+    |--------------------------------------------------------------------------
+    | Minimum Log File Size
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the minimum size (in bytes) that a log file must
+    | have before it can be rotated. Files smaller than this size will not
+    | be rotated. Set to 0 to disable this check and rotate regardless of size.
+    |
+    */
+    'log_min_size' => env('LOG_MIN_SIZE', 0),
+
     /*
     |--------------------------------------------------------------------------
     | Truncate Log file

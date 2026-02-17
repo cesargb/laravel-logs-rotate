@@ -32,11 +32,12 @@ class Rotate
         return new Rotation(array_merge(
             [
                 'files' => config('rotate.log_max_files', 366),
+                'min-size' => config('rotate.log_min_size', 0),
                 'compress' => config('rotate.log_compress_files', true),
+                'truncate' => config('rotate.truncate', true),
                 'then' => function ($filenameRotated, $filename) {
                     event(new RotateWasSuccessful($filename, $filenameRotated));
                 },
-                'truncate' => config('rotate.truncate', true),
                 'catch' => function ($error) {
                     event(new RotateHasFailed('', $error));
                 },
