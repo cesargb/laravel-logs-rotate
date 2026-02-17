@@ -10,7 +10,8 @@ class RotateFileCommand extends Command
     protected $signature = 'rotate:files
                                         {--f|file=* : Files to rotate}
                                         {--c|compress=true : Compress the file rotated}
-                                        {--m|max-files=5 : Max files rotated}
+                                        {--m|max-files=30 : Max files rotated}
+                                        {--s|min-size=0 : Minimum size of the file to rotate}
                                         {--d|dir= : Dir where archive the file rotated}';
 
     protected $description = 'Rotate files';
@@ -23,8 +24,9 @@ class RotateFileCommand extends Command
             $rotate = new Rotate;
 
             $rotate->file($filename, [
-                'files' => config('rotate.log_max_files', 366),
-                'compress' => config('rotate.log_compress_files', true),
+                'files' => $this->option('max-files', config('rotate.log_max_files', 366)),
+                'min-size' => $this->option('min-size', config('rotate.log_min_size', 0)),
+                'compress' => $this->option('compress', config('rotate.log_compress_files', true)),
                 // 'then' => function () {
                 //     $this->line('<info>ok</>');
                 // },
