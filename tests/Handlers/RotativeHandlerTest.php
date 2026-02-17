@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Event;
 
 class RotativeHandlerTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -39,7 +39,7 @@ class RotateCommand extends Command
 
     protected function rotateFile(string $filename)
     {
-        $rotation = new LaravelLogRotate();
+        $rotation = new LaravelLogRotate;
 
         $rotation->file($filename);
     }

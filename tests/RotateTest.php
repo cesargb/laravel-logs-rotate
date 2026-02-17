@@ -19,12 +19,12 @@ class RotateTest extends TestCase
         Event::assertDispatched(RotateHasFailed::class, 0);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileDoesNotExist(app()->storagePath() . '/logs/laravel.log.1.gz');
+        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
     public function test_no_rotate_if_file_logs_is_empty()
     {
-        touch(app()->storagePath() . '/logs/laravel.log');
+        touch(app()->storagePath().'/logs/laravel.log');
 
         $resultCode = Artisan::call('rotate:logs');
 
@@ -32,7 +32,7 @@ class RotateTest extends TestCase
         Event::assertDispatched(RotateHasFailed::class, 0);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileDoesNotExist(app()->storagePath() . '/logs/laravel.log.1.gz');
+        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log.1.gz');
     }
 
     public function test_it_not_rotate_logs_daily()
@@ -54,7 +54,7 @@ class RotateTest extends TestCase
         $this->assertEquals($resultCode, 0);
 
         foreach ($files as $file) {
-            $this->assertFileDoesNotExist($file . '.1.gz');
+            $this->assertFileDoesNotExist($file.'.1.gz');
         }
     }
 
@@ -64,7 +64,7 @@ class RotateTest extends TestCase
             'driver' => 'monolog',
             'handler' => StreamHandler::class,
             'with' => [
-                'stream' => app()->storagePath() . '/logs/custom.log',
+                'stream' => app()->storagePath().'/logs/custom.log',
             ],
         ]);
 
@@ -72,16 +72,16 @@ class RotateTest extends TestCase
 
         $this->writeLog();
 
-        $this->assertFileExists(app()->storagePath() . '/logs/custom.log');
+        $this->assertFileExists(app()->storagePath().'/logs/custom.log');
 
         $resultCode = Artisan::call('rotate:logs');
 
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileExists(app()->storagePath() . '/logs/custom.log.1.gz');
+        $this->assertFileExists(app()->storagePath().'/logs/custom.log.1.gz');
 
-        unlink(app()->storagePath() . '/logs/custom.log.1.gz');
+        unlink(app()->storagePath().'/logs/custom.log.1.gz');
     }
 
     public function test_it_not_rotate_logs_custom_stream_std()
@@ -108,18 +108,18 @@ class RotateTest extends TestCase
     {
         $this->writeLog();
 
-        $this->assertFileExists(app()->storagePath() . '/logs/laravel.log');
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
 
         $resultCode = Artisan::call('rotate:logs');
 
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileExists(app()->storagePath() . '/logs/laravel.log.1.gz');
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
 
         $this->writeLog();
 
-        $this->assertGreaterThan(0, filesize(app()->storagePath() . '/logs/laravel.log'));
+        $this->assertGreaterThan(0, filesize(app()->storagePath().'/logs/laravel.log'));
     }
 
     public function test_log_file_exits_if_truncate_enable()
@@ -127,15 +127,15 @@ class RotateTest extends TestCase
         $this->app['config']->set('rotate.truncate', true);
         $this->writeLog();
 
-        $this->assertFileExists(app()->storagePath() . '/logs/laravel.log');
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
 
         $resultCode = Artisan::call('rotate:logs');
 
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileExists(app()->storagePath() . '/logs/laravel.log.1.gz');
-        $this->assertFileExists(app()->storagePath() . '/logs/laravel.log');
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
     }
 
     public function test_log_file_does_not_exits_if_truncate_disable()
@@ -143,15 +143,15 @@ class RotateTest extends TestCase
         $this->app['config']->set('rotate.truncate', false);
         $this->writeLog();
 
-        $this->assertFileExists(app()->storagePath() . '/logs/laravel.log');
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log');
 
         $resultCode = Artisan::call('rotate:logs');
 
         Event::assertDispatched(RotateWasSuccessful::class, 1);
 
         $this->assertEquals($resultCode, 0);
-        $this->assertFileExists(app()->storagePath() . '/logs/laravel.log.1.gz');
-        $this->assertFileDoesNotExist(app()->storagePath() . '/logs/laravel.log');
+        $this->assertFileExists(app()->storagePath().'/logs/laravel.log.1.gz');
+        $this->assertFileDoesNotExist(app()->storagePath().'/logs/laravel.log');
     }
 
     public function test_rotate_foreing_files()
