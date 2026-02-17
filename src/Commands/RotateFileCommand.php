@@ -24,9 +24,9 @@ class RotateFileCommand extends Command
             $rotate = new Rotate;
 
             $rotate->file($filename, [
-                'files' => $this->option('max-files', config('rotate.log_max_files', 366)),
-                'min-size' => $this->option('min-size', config('rotate.log_min_size', 0)),
-                'compress' => $this->option('compress', config('rotate.log_compress_files', true)),
+                'files' => $this->option('max-files'),
+                'min-size' => $this->option('min-size'),
+                'compress' => $this->option('compress'),
                 // 'then' => function () {
                 //     $this->line('<info>ok</>');
                 // },
