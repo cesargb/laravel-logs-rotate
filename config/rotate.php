@@ -43,6 +43,10 @@ return [
     |
     | This option defines if the log file must be truncated after rotated.
     | If you prefer not truncate file, set this value at false.
+    |
+    | Performance Tip: If using monolog/monolog:^3.10 or higher, you can
+    | disable truncate for more efficient rotation. See:
+    | https://github.com/Seldaek/monolog/pull/1963
     */
     'truncate' => env('LOG_TRUNCATE', true),
 

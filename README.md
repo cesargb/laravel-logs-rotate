@@ -86,7 +86,7 @@ return [
     | Other files to rotated
     |--------------------------------------------------------------------------
     |
-    | Array the other foreing files
+    | Array the other foreign files
     |
     | Example:
     |   'foreign_files' => [
@@ -97,6 +97,16 @@ return [
     'foreign_files' => []
 ];
 ```
+
+### Performance Tip for Monolog 3.10+
+
+If you are using `monolog/monolog:^3.10` or higher, you can disable the `truncate` option for more efficient log rotation:
+
+```php
+'truncate' => false,
+```
+
+With Monolog 3.10+, the rotation process is optimized and truncating is no longer necessary, resulting in better performance. For more details, see [monolog PR #1963](https://github.com/Seldaek/monolog/pull/1963).
 
 ## Command
 
